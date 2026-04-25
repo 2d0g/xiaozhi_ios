@@ -16,6 +16,8 @@
 		F107 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = R107 /* NetworkManager.swift */; };
 		F108 /* OTAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = R108 /* OTAService.swift */; };
 		F109 /* OTAContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = R109 /* OTAContext.swift */; };
+		F111 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = R111 /* WebSocketManager.swift */; };
+		F112 /* AudioEngineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = R112 /* AudioEngineManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		R108 /* OTAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAService.swift; sourceTree = "<group>"; };
 		R109 /* OTAContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAContext.swift; sourceTree = "<group>"; };
 		R110 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		R111 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		R112 /* AudioEngineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineManager.swift; sourceTree = "<group>"; };
 		R999 /* xiaozhi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xiaozhi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -56,6 +60,8 @@
 				R108 /* OTAService.swift */,
 				R109 /* OTAContext.swift */,
 				R110 /* Info.plist */,
+				R111 /* WebSocketManager.swift */,
+				R112 /* AudioEngineManager.swift */,
 			);
 			path = xiaozhi;
 			sourceTree = "<group>";
@@ -153,6 +159,8 @@
 				F107 /* NetworkManager.swift in Sources */,
 				F108 /* OTAService.swift in Sources */,
 				F109 /* OTAContext.swift in Sources */,
+				F111 /* WebSocketManager.swift in Sources */,
+				F112 /* AudioEngineManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
