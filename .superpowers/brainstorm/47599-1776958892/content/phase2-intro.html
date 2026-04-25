@@ -1,0 +1,23 @@
+<h2>第二阶段：OTA 与激活服务 (OTA & Activation)</h2>
+<p class="subtitle">让设备与服务器握手，获取“合法身份”</p>
+
+<div class="section">
+  <h3>当前进度</h3>
+  <ul>
+    <li>✅ 第一阶段：身份与安全（SN 生成、Keychain 存储、HMAC 校验）已完成</li>
+    <li>⏳ 第二阶段：实现 NetworkManager (URLSession 封装)</li>
+    <li>⏳ 第二阶段：实现 OTAContext (存储服务器下发的配置)</li>
+    <li>⏳ 第二阶段：获取激活码并轮询激活状态</li>
+  </ul>
+</div>
+
+<div class="mockup">
+  <div class="mockup-header">OTA Flow</div>
+  <div class="mockup-body" style="font-size: 0.8em;">
+    <pre>
+[App] --(POST /ota)--> [xiaozhi.me]
+   ^                      |
+   |--- (激活码/Token) ----|
+    </pre>
+  </div>
+</div>

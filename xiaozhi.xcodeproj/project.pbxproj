@@ -1,0 +1,234 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F101 /* xiaozhiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = R101 /* xiaozhiApp.swift */; };
+		F102 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = R102 /* ContentView.swift */; };
+		F103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = R103 /* Assets.xcassets */; };
+		F104 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = R104 /* KeychainManager.swift */; };
+		F105 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = R105 /* CryptoUtils.swift */; };
+		F106 /* DeviceFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = R106 /* DeviceFingerprint.swift */; };
+		F107 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = R107 /* NetworkManager.swift */; };
+		F108 /* OTAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = R108 /* OTAService.swift */; };
+		F109 /* OTAContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = R109 /* OTAContext.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		R101 /* xiaozhiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xiaozhiApp.swift; sourceTree = "<group>"; };
+		R102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		R103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		R104 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		R105 /* CryptoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoUtils.swift; sourceTree = "<group>"; };
+		R106 /* DeviceFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceFingerprint.swift; sourceTree = "<group>"; };
+		R107 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		R108 /* OTAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAService.swift; sourceTree = "<group>"; };
+		R109 /* OTAContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAContext.swift; sourceTree = "<group>"; };
+		R110 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		R999 /* xiaozhi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xiaozhi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		W101 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G101 /* xiaozhi */ = {
+			isa = PBXGroup;
+			children = (
+				R101 /* xiaozhiApp.swift */,
+				R102 /* ContentView.swift */,
+				R103 /* Assets.xcassets */,
+				R104 /* KeychainManager.swift */,
+				R105 /* CryptoUtils.swift */,
+				R106 /* DeviceFingerprint.swift */,
+				R107 /* NetworkManager.swift */,
+				R108 /* OTAService.swift */,
+				R109 /* OTAContext.swift */,
+				R110 /* Info.plist */,
+			);
+			path = xiaozhi;
+			sourceTree = "<group>";
+		};
+		M101 = {
+			isa = PBXGroup;
+			children = (
+				G101 /* xiaozhi */,
+				P101 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		P101 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				R999 /* xiaozhi.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		T101 /* xiaozhi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C102 /* Build configuration list for PBXNativeTarget "xiaozhi" */;
+			buildPhases = (
+				S101 /* Sources */,
+				W101 /* Frameworks */,
+				E101 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xiaozhi;
+			productName = xiaozhi;
+			productReference = R999 /* xiaozhi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PR101 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					T101 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = C101 /* Build configuration list for PBXProject "xiaozhi" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = M101;
+			productRefGroup = P101 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				T101 /* xiaozhi */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E101 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F103 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		S101 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F101 /* xiaozhiApp.swift in Sources */,
+				F102 /* ContentView.swift in Sources */,
+				F104 /* KeychainManager.swift in Sources */,
+				F105 /* CryptoUtils.swift in Sources */,
+				F106 /* DeviceFingerprint.swift in Sources */,
+				F107 /* NetworkManager.swift in Sources */,
+				F108 /* OTAService.swift in Sources */,
+				F109 /* OTAContext.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BC101 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xd0g.xiaozhi;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BC102 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xd0g.xiaozhi;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		BC201 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 53LHP6SG7N;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = xiaozhi/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xd0g.xiaozhi;
+				PRODUCT_NAME = xiaozhi;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BC202 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 53LHP6SG7N;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = xiaozhi/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xd0g.xiaozhi;
+				PRODUCT_NAME = xiaozhi;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C101 /* Build configuration list for PBXProject "xiaozhi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC101 /* Debug */,
+				BC102 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C102 /* Build configuration list for PBXNativeTarget "xiaozhi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC201 /* Debug */,
+				BC202 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PR101 /* Project object */;
+}

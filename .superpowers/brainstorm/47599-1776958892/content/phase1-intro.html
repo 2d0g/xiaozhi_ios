@@ -1,0 +1,26 @@
+<h2>第一阶段：身份与安全 (Identity & Security)</h2>
+<p class="subtitle">我们将建立设备的唯一标识和安全存储机制</p>
+
+<div class="section">
+  <h3>任务清单</h3>
+  <ul>
+    <li>✅ 确认开始第一阶段</li>
+    <li>⏳ 创建 <b>KeychainManager.swift</b>：封装系统 Keychain API</li>
+    <li>⏳ 创建 <b>CryptoUtils.swift</b>：实现 HMAC-SHA256 加密</li>
+    <li>⏳ 创建 <b>DeviceFingerprint.swift</b>：生成并持久化 SN 和 HMAC Key</li>
+    <li>⏳ 编写 <b>IdentityTests.swift</b> 并运行验证</li>
+  </ul>
+</div>
+
+<div class="mockup">
+  <div class="mockup-header">Identity & Security Architecture</div>
+  <div class="mockup-body">
+    <pre>
+[DeviceFingerprint]
+      |
+      +-- [KeychainManager] --> (iOS Keychain)
+      |
+      +-- [CryptoUtils] --> (CommonCrypto)
+    </pre>
+  </div>
+</div>
