@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A34E13BF2F9CFB0C00A16E60 /* sherpa-onnx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A34E13BE2F9CFB0C00A16E60 /* sherpa-onnx.xcframework */; };
+		A34E13C22F9CFD7600A16E60 /* WakeWordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34E13C12F9CFD7600A16E60 /* WakeWordManager.swift */; };
+		A34E13C42F9CFEBC00A16E60 /* sherpa-onnx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A34E13BE2F9CFB0C00A16E60 /* sherpa-onnx.xcframework */; };
+		A34E13C52F9CFEBC00A16E60 /* sherpa-onnx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A34E13BE2F9CFB0C00A16E60 /* sherpa-onnx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A34E13D52F9D023300A16E60 /* onnxruntime.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A34E13D42F9D023300A16E60 /* onnxruntime.xcframework */; };
+		A34E13E52F9D070B00A16E60 /* joiner.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A34E13E22F9D070B00A16E60 /* joiner.onnx */; };
+		A34E13E62F9D070B00A16E60 /* tokens.txt in Resources */ = {isa = PBXBuildFile; fileRef = A34E13E42F9D070B00A16E60 /* tokens.txt */; };
+		A34E13E72F9D070B00A16E60 /* decoder.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A34E13E02F9D070B00A16E60 /* decoder.onnx */; };
+		A34E13E82F9D070B00A16E60 /* encoder.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A34E13E12F9D070B00A16E60 /* encoder.onnx */; };
+		A34E13E92F9D070B00A16E60 /* keywords.txt in Resources */ = {isa = PBXBuildFile; fileRef = A34E13E32F9D070B00A16E60 /* keywords.txt */; };
 		F101 /* xiaozhiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = R101 /* xiaozhiApp.swift */; };
 		F102 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = R102 /* ContentView.swift */; };
 		F103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = R103 /* Assets.xcassets */; };
@@ -20,7 +30,30 @@
 		F112 /* AudioEngineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = R112 /* AudioEngineManager.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A34E13C62F9CFEBC00A16E60 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A34E13C52F9CFEBC00A16E60 /* sherpa-onnx.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		A34E13BE2F9CFB0C00A16E60 /* sherpa-onnx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = "sherpa-onnx.xcframework"; sourceTree = "<group>"; };
+		A34E13C02F9CFD4B00A16E60 /* xiaozhi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "xiaozhi-Bridging-Header.h"; sourceTree = "<group>"; };
+		A34E13C12F9CFD7600A16E60 /* WakeWordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeWordManager.swift; sourceTree = "<group>"; };
+		A34E13D42F9D023300A16E60 /* onnxruntime.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = onnxruntime.xcframework; sourceTree = "<group>"; };
+		A34E13E02F9D070B00A16E60 /* decoder.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = decoder.onnx; sourceTree = "<group>"; };
+		A34E13E12F9D070B00A16E60 /* encoder.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = encoder.onnx; sourceTree = "<group>"; };
+		A34E13E22F9D070B00A16E60 /* joiner.onnx */ = {isa = PBXFileReference; lastKnownFileType = text; path = joiner.onnx; sourceTree = "<group>"; };
+		A34E13E32F9D070B00A16E60 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
+		A34E13E42F9D070B00A16E60 /* tokens.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = tokens.txt; sourceTree = "<group>"; };
 		R101 /* xiaozhiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xiaozhiApp.swift; sourceTree = "<group>"; };
 		R102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		R103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,15 +74,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A34E13BF2F9CFB0C00A16E60 /* sherpa-onnx.xcframework in Frameworks */,
+				A34E13C42F9CFEBC00A16E60 /* sherpa-onnx.xcframework in Frameworks */,
+				A34E13D52F9D023300A16E60 /* onnxruntime.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A34E13C32F9CFEBC00A16E60 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A34E13D42F9D023300A16E60 /* onnxruntime.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		G101 /* xiaozhi */ = {
 			isa = PBXGroup;
 			children = (
+				A34E13E02F9D070B00A16E60 /* decoder.onnx */,
+				A34E13E12F9D070B00A16E60 /* encoder.onnx */,
+				A34E13E22F9D070B00A16E60 /* joiner.onnx */,
+				A34E13E32F9D070B00A16E60 /* keywords.txt */,
+				A34E13E42F9D070B00A16E60 /* tokens.txt */,
+				A34E13BE2F9CFB0C00A16E60 /* sherpa-onnx.xcframework */,
 				R101 /* xiaozhiApp.swift */,
 				R102 /* ContentView.swift */,
 				R103 /* Assets.xcassets */,
@@ -62,6 +112,8 @@
 				R110 /* Info.plist */,
 				R111 /* WebSocketManager.swift */,
 				R112 /* AudioEngineManager.swift */,
+				A34E13C02F9CFD4B00A16E60 /* xiaozhi-Bridging-Header.h */,
+				A34E13C12F9CFD7600A16E60 /* WakeWordManager.swift */,
 			);
 			path = xiaozhi;
 			sourceTree = "<group>";
@@ -70,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				G101 /* xiaozhi */,
+				A34E13C32F9CFEBC00A16E60 /* Frameworks */,
 				P101 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +145,7 @@
 				S101 /* Sources */,
 				W101 /* Frameworks */,
 				E101 /* Resources */,
+				A34E13C62F9CFEBC00A16E60 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -141,6 +195,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F103 /* Assets.xcassets in Resources */,
+				A34E13E52F9D070B00A16E60 /* joiner.onnx in Resources */,
+				A34E13E62F9D070B00A16E60 /* tokens.txt in Resources */,
+				A34E13E72F9D070B00A16E60 /* decoder.onnx in Resources */,
+				A34E13E82F9D070B00A16E60 /* encoder.onnx in Resources */,
+				A34E13E92F9D070B00A16E60 /* keywords.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +218,7 @@
 				F107 /* NetworkManager.swift in Sources */,
 				F108 /* OTAService.swift in Sources */,
 				F109 /* OTAContext.swift in Sources */,
+				A34E13C22F9CFD7600A16E60 /* WakeWordManager.swift in Sources */,
 				F111 /* WebSocketManager.swift in Sources */,
 				F112 /* AudioEngineManager.swift in Sources */,
 			);
@@ -193,9 +253,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 53LHP6SG7N;
 				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/xiaozhi/include";
 				INFOPLIST_FILE = xiaozhi/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xd0g.xiaozhi;
 				PRODUCT_NAME = xiaozhi;
+				SWIFT_OBJC_BRIDGING_HEADER = "xiaozhi/xiaozhi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -207,9 +269,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 53LHP6SG7N;
 				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/xiaozhi/include";
 				INFOPLIST_FILE = xiaozhi/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xd0g.xiaozhi;
 				PRODUCT_NAME = xiaozhi;
+				SWIFT_OBJC_BRIDGING_HEADER = "xiaozhi/xiaozhi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -6,82 +6,129 @@ class AudioEngineManager: ObservableObject {
     private var audioEngine: AVAudioEngine?
     private var playerNode: AVAudioPlayerNode?
     
-    // 强制使用 48kHz 原生频率，彻底消灭语速慢和重采样开销
-    private let nativeFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 48000, channels: 1, interleaved: false)!
+    @Published var isRecording = false
+    @Published var isListening = true // 默认开启常驻监听
     
-    private let opusFormat: AVAudioFormat = {
-        var asbd = AudioStreamBasicDescription(
-            mSampleRate: 48000, mFormatID: kAudioFormatOpus, mFormatFlags: 0,
-            mBytesPerPacket: 0, mFramesPerPacket: 960, // 20ms @ 48kHz = 960
-            mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0
-        )
-        return AVAudioFormat(streamDescription: &asbd)!
-    }()
+    private let nativeFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 48000, channels: 1, interleaved: false)!
+    private let wakeFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 16000, channels: 1, interleaved: false)!
     
     private var opusDecoder: AVAudioConverter?
-    
-    // 高性能音频处理线程
+    private var wakeResampler: AVAudioConverter?
     private let audioQueue = DispatchQueue(label: "com.xiaozhi.audio.pro", qos: .userInteractive)
 
     init() {
-        self.setupNativeEngine()
+        self.setupAudioEngine()
+        
+        // 绑定唤醒成功回调
+        WakeWordManager.shared.onWakeWordDetected = { keyword in
+            if keyword.contains("天猫精灵") || keyword.contains("小智") {
+                self.triggerAIConversation()
+            }
+        }
     }
 
-    private func setupNativeEngine() {
+    private func setupAudioEngine() {
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
+            try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth, .mixWithOthers])
             try session.setActive(true)
             
             let engine = AVAudioEngine()
             let player = AVAudioPlayerNode()
             engine.attach(player)
-            
-            // 直接以 48kHz 连接，这是 iPhone 11 的物理舒适区
             engine.connect(player, to: engine.mainMixerNode, format: nativeFormat)
             
-            self.opusDecoder = AVAudioConverter(from: opusFormat, to: nativeFormat)
+            var asbd = AudioStreamBasicDescription(mSampleRate: 48000, mFormatID: kAudioFormatOpus, mFormatFlags: 0, mBytesPerPacket: 0, mFramesPerPacket: 960, mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0)
+            self.opusDecoder = AVAudioConverter(from: AVAudioFormat(streamDescription: &asbd)!, to: nativeFormat)
+            
             self.audioEngine = engine
             self.playerNode = player
+            
+            self.startPassiveListening()
             
             engine.prepare()
             try engine.start()
             player.play()
-            print("🚀 iPhone 11 物理直通播放管线已激活 (48kHz)")
+            print("🚀 iPhone 11 双工语音管线已启动")
         } catch {
             print("!!! 引擎初始化失败: \(error)")
         }
     }
+
+    private func startPassiveListening() {
+        guard let engine = self.audioEngine else { return }
+        let inputNode = engine.inputNode
+        let hwFormat = inputNode.outputFormat(forBus: 0)
+        
+        self.wakeResampler = AVAudioConverter(from: hwFormat, to: wakeFormat)
+        
+        inputNode.removeTap(onBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 4800, format: hwFormat) { [weak self] buffer, _ in
+            self?.audioQueue.async {
+                self?.handleMicInput(buffer)
+            }
+        }
+    }
+
+    private func handleMicInput(_ buffer: AVAudioPCMBuffer) {
+        guard let resampler = wakeResampler else { return }
+        
+        // 1. 转换到 16kHz
+        let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: 1024)!
+        var error: NSError?
+        let status = resampler.convert(to: outBuffer, error: &error) { _, outStatus in
+            outStatus.pointee = .haveData
+            return buffer
+        }
+        
+        if status == .haveData {
+            // 2. 将 16k 数据喂给唤醒管理器
+            let array = Array(UnsafeBufferPointer(start: outBuffer.floatChannelData![0], count: Int(outBuffer.frameLength)))
+            WakeWordManager.shared.processAudio(samples: array)
+            
+            // 3. TODO: 如果当前正在通话模式，则同时也发送给 WebSocket
+            // if self.isRecording { WebSocketManager.shared.sendAudioData(...) }
+        }
+    }
     
-    func resetPlayback() {}
-    func flushPlayback() {}
+    private func triggerAIConversation() {
+        print("🔊 唤醒词触发！正在建立 AI 对话...")
+        // 这里可以播放一个提示音
+        WebSocketManager.shared.sendListenStart()
+        DispatchQueue.main.async {
+            self.isRecording = true
+        }
+    }
+
+    func resetPlayback() {
+        self.playerNode?.stop()
+        if let engine = self.audioEngine, engine.isRunning {
+            self.playerNode?.play()
+        }
+    }
     
+    func flushPlayback() {
+        // 用于流式播放结束时的清理，直通模式下保持空实现
+    }
+
+    func stopRecording() {
+        DispatchQueue.main.async {
+            self.isRecording = false
+        }
+    }
+
     func playAIResponse(data: Data) {
         audioQueue.async {
             guard let dec = self.opusDecoder, let player = self.playerNode else { return }
-            
-            // 构造输入缓冲区 (告诉系统这是 48k 的包，让它解出 960 帧)
-            let inBuffer = AVAudioCompressedBuffer(format: self.opusFormat, packetCapacity: 1, maximumPacketSize: data.count)
-            inBuffer.byteLength = UInt32(data.count)
-            inBuffer.packetCount = 1
+            let inBuffer = AVAudioCompressedBuffer(format: dec.inputFormat, packetCapacity: 1, maximumPacketSize: data.count)
+            inBuffer.byteLength = UInt32(data.count); inBuffer.packetCount = 1
             data.copyBytes(to: inBuffer.data.assumingMemoryBound(to: UInt8.self), count: data.count)
             inBuffer.packetDescriptions?.pointee = AudioStreamPacketDescription(mStartOffset: 0, mVariableFramesInPacket: 960, mDataByteSize: UInt32(data.count))
-            
             let outBuffer = AVAudioPCMBuffer(pcmFormat: self.nativeFormat, frameCapacity: 1024)!
             var error: NSError?
-            
-            let status = dec.convert(to: outBuffer, error: &error) { _, outStatus in 
-                outStatus.pointee = .haveData
-                return inBuffer 
-            }
-            
-            if status == .haveData && outBuffer.frameLength > 0 {
-                // 采用最原始的 scheduleBuffer，不带选项，利用 playerNode 内部的硬件缓冲区进行平滑
+            if dec.convert(to: outBuffer, error: &error, withInputFrom: { _, outStatus in outStatus.pointee = .haveData; return inBuffer }) == .haveData {
                 player.scheduleBuffer(outBuffer, at: nil, options: [], completionHandler: nil)
-                
-                if !player.isPlaying {
-                    player.play()
-                }
+                if !player.isPlaying { player.play() }
             }
         }
     }
