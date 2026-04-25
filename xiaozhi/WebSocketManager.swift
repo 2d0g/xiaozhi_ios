@@ -1,11 +1,18 @@
 import Foundation
 
+struct ChatMessage: Identifiable, Equatable {
+    let id = UUID()
+    let role: String // "user" or "ai"
+    var text: String
+}
+
 class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate {
     static let shared = WebSocketManager()
     @Published var isConnected = false
-    @Published var userText: String = ""
-    @Published var aiText: String = ""
-    private var sessionId: String?
+    @Published var isConnecting = false
+    @Published var errorMessage: String?
+    
+    @Published var messages: [ChatMessage] = []
     
     private var webSocketTask: URLSessionWebSocketTask?
     private lazy var session: URLSession = {
@@ -15,9 +22,16 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
     func connect(url: String, token: String) {
         var cleanURL = url
         if cleanURL.hasSuffix("/") { cleanURL.removeLast() }
+        
         guard let serverURL = URL(string: cleanURL) else { return }
+        if isConnected || isConnecting { return }
+        
+        isConnecting = true
+        errorMessage = nil
+        print(">>> 正在建立 WebSocket 连接: \(cleanURL)")
         
         var request = URLRequest(url: serverURL)
+        request.timeoutInterval = 10
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.addValue("1", forHTTPHeaderField: "Protocol-Version")
         request.addValue(DeviceFingerprint.shared.getOrGenerateMAC(), forHTTPHeaderField: "Device-Id")
@@ -25,42 +39,76 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
         
         webSocketTask = session.webSocketTask(with: request)
         webSocketTask?.resume()
+        
         receiveMessage()
+        setupPing()
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        sendHello()
+        print("✅ WebSocket 链路已成功升级 (HTTP 101)")
+        self.sendHello()
     }
     
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        if let error = error {
+            let nsError = error as NSError
+            if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled { return }
+            
+            print("!!! WebSocket 链路异常 [Code \(nsError.code)]: \(nsError.localizedDescription)")
+            
+            DispatchQueue.main.async {
+                self.isConnected = false
+                self.isConnecting = false
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+
+    private func setupPing() {
+        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+            self?.webSocketTask?.sendPing { error in
+                if let _ = error { print("!!! Ping 失败，链路可能已断开") }
+            }
+        }
+    }
+
     private func sendHello() {
-        // 对标参考项目：16000Hz + 60ms 帧长
+        print(">>> 发送业务 hello 报文...")
         let hello: [String: Any] = [
-            "type": "hello", "version": 1, "transport": "websocket",
-            "audio_params": ["format": "opus", "sample_rate": 16000, "channels": 1, "frame_duration": 60]
+            "type": "hello",
+            "version": 1,
+            "transport": "websocket",
+            "audio_params": ["format": "opus", "sample_rate": 24000, "channels": 1, "frame_duration": 20]
         ]
         sendJson(hello)
     }
     
     func sendListenStart() {
-        var msg: [String: Any] = ["type": "listen", "state": "start", "mode": "auto"]
-        if let sid = sessionId { msg["session_id"] = sid }
-        sendJson(msg)
+        guard isConnected else { print("!!! 警告：尚未握手成功，拒绝发送 listen.start"); return }
+        sendJson(["type": "listen", "state": "start", "mode": "auto"])
+        DispatchQueue.main.async {
+            self.messages.append(ChatMessage(role: "user", text: "..."))
+        }
     }
     
     func sendListenStop() {
-        var msg: [String: Any] = ["type": "listen", "state": "stop"]
-        if let sid = sessionId { msg["session_id"] = sid }
-        sendJson(msg)
+        guard isConnected else { return }
+        sendJson(["type": "listen", "state": "stop"])
     }
     
     func sendAudioData(_ data: Data) {
-        webSocketTask?.send(.data(data)) { _ in }
+        guard isConnected else { return }
+        webSocketTask?.send(.data(data)) { error in
+            if let error = error { print("!!! 音频发送失败: \(error.localizedDescription)") }
+        }
     }
     
     private func sendJson(_ dict: [String: Any]) {
         if let data = try? JSONSerialization.data(withJSONObject: dict),
            let str = String(data: data, encoding: .utf8) {
-            webSocketTask?.send(.string(str)) { _ in }
+            webSocketTask?.send(.string(str)) { error in
+                if let error = error { print("!!! JSON 发送失败: \(error)") }
+            }
         }
     }
     
@@ -70,7 +118,7 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
             if case .success(let message) = result {
                 switch message {
                 case .string(let text): self.handleJson(text)
-                case .data(let data): AudioEngineManager.shared.playAIResponse(data: data)
+                case .data(let data): self.handleAudio(data)
                 @unknown default: break
                 }
                 self.receiveMessage()
@@ -82,12 +130,35 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
         guard let data = text.data(using: .utf8),
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let type = json["type"] as? String else { return }
-        
+              
         DispatchQueue.main.async {
-            if let sid = json["session_id"] as? String { self.sessionId = sid }
-            if type == "hello" { self.isConnected = true }
-            if type == "stt", let content = json["text"] as? String { self.userText = content }
-            if type == "tts", let content = json["text"] as? String { self.aiText = content }
+            if type == "hello" {
+                print("🎉 小智业务握手成功，现在可以开始对话了！")
+                self.isConnected = true
+                self.isConnecting = false
+            } else if type == "stt" {
+                if let content = json["text"] as? String {
+                    if let lastIndex = self.messages.lastIndex(where: { $0.role == "user" }) {
+                        self.messages[lastIndex].text = content
+                    } else {
+                        self.messages.append(ChatMessage(role: "user", text: content))
+                    }
+                }
+            } else if type == "tts" {
+                if let state = json["state"] as? String, (state == "sentence_start" || state == "sentence_end"), let content = json["text"] as? String, !content.isEmpty {
+                    if let last = self.messages.last, last.role == "ai", last.text == content {
+                        // ignore duplicate
+                    } else if let last = self.messages.last, last.role == "ai", state == "sentence_end" {
+                        self.messages[self.messages.count - 1].text = content
+                    } else {
+                        self.messages.append(ChatMessage(role: "ai", text: content))
+                    }
+                }
+            }
         }
+    }
+    
+    private func handleAudio(_ data: Data) {
+        AudioEngineManager.shared.playAIResponse(data: data)
     }
 }

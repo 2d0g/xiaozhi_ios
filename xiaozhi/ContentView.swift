@@ -9,67 +9,46 @@ struct ContentView: View {
     @State private var isActivating: Bool = false
     @State private var errorMessage: String?
     @State private var isFullyActivated: Bool = false
+    @State private var webSocketURL: String = ""
+    @State private var webSocketToken: String = ""
 
     var body: some View {
-        VStack(spacing: 25) {
+        VStack(spacing: 15) {
             headerSection
             
             if !isFullyActivated {
                 identitySection
                 activationSection
+                Spacer()
             } else {
-                dialogueSection
+                chatSection
+                activatedBusinessSection
             }
             
             if let error = errorMessage {
-                Text(error).font(.caption).foregroundColor(.red).padding(.horizontal)
+                Text(error)
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
             }
-            Spacer()
+            
             footerSection
         }
         .padding()
-        .onAppear { loadInitialData() }
-    }
-
-    private var dialogueSection: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "waveform.and.mic")
-                .font(.system(size: 60))
-                .foregroundColor(audioEngine.isRecording ? .red : .green)
-                .padding(.top)
-            
-            VStack(alignment: .leading, spacing: 15) {
-                if !wsManager.userText.isEmpty {
-                    VStack(alignment: .trailing) {
-                        Text("我:").font(.caption).foregroundColor(.secondary).frame(maxWidth: .infinity, alignment: .trailing)
-                        Text(wsManager.userText).padding(10).background(Color.accentColor.opacity(0.1)).cornerRadius(10)
-                    }
-                }
-                
-                if !wsManager.aiText.isEmpty {
-                    VStack(alignment: .leading) {
-                        Text("小智:").font(.caption).foregroundColor(.secondary)
-                        Text(wsManager.aiText).padding(10).background(Color.secondary.opacity(0.1)).cornerRadius(10)
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 15).stroke(Color.secondary.opacity(0.2)))
-            
-            Button(action: { self.toggleAudio() }) {
-                Label(audioEngine.isRecording ? "说完了" : "点击说话", systemImage: audioEngine.isRecording ? "checkmark.circle.fill" : "mic.fill")
-                    .font(.headline).padding()
-            }
-            .buttonStyle(BorderedProminentButtonStyle())
+        .onAppear {
+            loadInitialData()
         }
     }
 
     private var headerSection: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "bolt.shield.fill").font(.system(size: 60)).foregroundColor(.accentColor)
-            Text("小智 AI 助手").font(.title).fontWeight(.bold)
-        }.padding(.top, 20)
+        VStack(spacing: 5) {
+            Image(systemName: "bolt.shield.fill")
+                .font(.system(size: 40))
+                .foregroundColor(.accentColor)
+            Text("小智 AI 助手").font(.title2).fontWeight(.bold)
+        }
+        .padding(.top, 20)
     }
 
     private var identitySection: some View {
@@ -78,23 +57,87 @@ struct ContentView: View {
             HStack {
                 Text("序列号 (SN):")
                 Spacer()
-                Text(serialNumber).font(.system(.body, design: .monospaced))
-            }.padding().background(Color.secondary.opacity(0.1)).cornerRadius(12)
-        }.padding(.horizontal)
+                Text(serialNumber).font(.system(.caption, design: .monospaced))
+            }
+            .padding().background(Color.secondary.opacity(0.1)).cornerRadius(12)
+        }
+        .padding(.horizontal)
     }
 
     private var activationSection: some View {
         VStack(spacing: 15) {
-            Text(activationCode).font(.system(size: 48, weight: .heavy, design: .monospaced)).foregroundColor(.accentColor)
+            Text("激活状态").font(.headline).frame(maxWidth: .infinity, alignment: .leading)
+            VStack(spacing: 5) {
+                Text(activationCode).font(.system(size: 40, weight: .heavy, design: .monospaced)).foregroundColor(.accentColor)
+                Text("请在管理后台输入此激活码").font(.footnote).foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity).padding(.vertical, 20)
+            .background(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.accentColor.opacity(0.3), lineWidth: 2).background(Color.accentColor.opacity(0.05)))
+            
             Button(action: { self.performOTAHandshake() }) {
                 if isActivating { ProgressView() }
                 else { Label("获取新激活码", systemImage: "arrow.clockwise") }
-            }.buttonStyle(BorderedProminentButtonStyle())
-        }.padding(.horizontal)
+            }
+            .buttonStyle(BorderedProminentButtonStyle())
+        }
+        .padding(.horizontal)
+    }
+    
+    private var chatSection: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    ForEach(wsManager.messages) { msg in
+                        HStack {
+                            if msg.role == "user" {
+                                Spacer()
+                                Text(msg.text)
+                                    .padding(10)
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(12)
+                            } else {
+                                Text(msg.text)
+                                    .padding(10)
+                                    .background(Color.gray.opacity(0.2))
+                                    .foregroundColor(.primary)
+                                    .cornerRadius(12)
+                                Spacer()
+                            }
+                        }
+                        .id(msg.id)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            .onChange(of: wsManager.messages) { _ in
+                if let last = wsManager.messages.last {
+                    withAnimation {
+                        proxy.scrollTo(last.id, anchor: .bottom)
+                    }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary.opacity(0.2)))
+    }
+    
+    private var activatedBusinessSection: some View {
+        VStack(spacing: 10) {
+            Button(action: { self.toggleAudio() }) {
+                Label(audioEngine.isRecording ? "说完了" : "按住说话", systemImage: audioEngine.isRecording ? "waveform" : "mic.fill")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
+            .buttonStyle(BorderedProminentButtonStyle())
+            .tint(audioEngine.isRecording ? .red : .green)
+            .padding(.horizontal)
+        }
+        .padding(.bottom, 10)
     }
 
     private var footerSection: some View {
-        Text("版本 0.0.4 (Text Visualizer Enabled)").font(.caption2).foregroundColor(.secondary)
+        Text("版本 0.0.3 (Chat History Enabled)").font(.caption2).foregroundColor(.secondary).padding(.bottom, 5)
     }
 
     private func toggleAudio() {
@@ -113,19 +156,26 @@ struct ContentView: View {
 
     private func performOTAHandshake() {
         isActivating = true
+        errorMessage = nil
         Task {
             do {
                 let response = try await OTAService.shared.handshake()
                 await MainActor.run {
-                    if let act = response.activation { self.activationCode = act.code }
-                    else if let ws = response.websocket {
+                    if let act = response.activation {
+                        self.activationCode = act.code
+                    } else if let ws = response.websocket {
+                        self.webSocketURL = ws.url
+                        self.webSocketToken = ws.token
                         withAnimation { self.isFullyActivated = true }
                         wsManager.connect(url: ws.url, token: ws.token)
                     }
                     self.isActivating = false
                 }
             } catch {
-                await MainActor.run { self.errorMessage = "错误: \(error.localizedDescription)"; self.isActivating = false }
+                await MainActor.run {
+                    self.errorMessage = "握手失败: \(error.localizedDescription)"
+                    self.isActivating = false
+                }
             }
         }
     }
