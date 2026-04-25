@@ -5,14 +5,20 @@ struct ContentView: View {
     @State private var activationCode: String = "未获取"
     @State private var isActivating: Bool = false
     @State private var errorMessage: String?
+    @State private var isFullyActivated: Bool = false
+    @State private var webSocketURL: String = ""
+    @State private var webSocketToken: String = ""
 
     var body: some View {
         VStack(spacing: 25) {
             headerSection
             
-            identitySection
-            
-            activationSection
+            if !isFullyActivated {
+                identitySection
+                activationSection
+            } else {
+                activatedBusinessSection
+            }
             
             if let error = errorMessage {
                 Text(error)
@@ -104,6 +110,24 @@ struct ContentView: View {
         .padding(.horizontal)
     }
 
+    private var activatedBusinessSection: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "waveform.and.mic")
+                .font(.system(size: 80))
+                .foregroundColor(.green)
+            
+            Text("小智已就绪")
+                .font(.headline)
+            
+            Button(action: { /* TODO: Start Audio */ }) {
+                Label("点击说话", systemImage: "mic.fill")
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+        }
+        .padding(.vertical, 40)
+    }
+
     private var footerSection: some View {
         Text("版本 1.0.0 (OTA Ready)")
             .font(.caption2)
@@ -128,9 +152,10 @@ struct ContentView: View {
                     if let act = response.activation {
                         self.activationCode = act.code
                         self.errorMessage = nil
-                    } else if response.websocket != nil {
-                        self.activationCode = "已激活"
-                        self.errorMessage = "设备已就绪，请进行下一步"
+                    } else if let ws = response.websocket {
+                        self.webSocketURL = ws.url
+                        self.webSocketToken = ws.token
+                        withAnimation { self.isFullyActivated = true }
                     }
                     self.isActivating = false
                 }
