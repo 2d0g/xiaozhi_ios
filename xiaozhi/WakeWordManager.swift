@@ -6,12 +6,26 @@ class WakeWordManager: ObservableObject {
     
     private var spotter: SherpaOnnxKeywordSpotterWrapper?
     @Published var isInitialized = false
+    @Published var isActive = false // 控制是否真正开始解码
     
     // 回调函数，当检测到关键词时触发
     var onWakeWordDetected: ((String) -> Void)?
 
     init() {
+        // init 不再自动初始化 Sherpa，等待业务指令
+    }
+
+    func startEngine() {
+        if isInitialized { 
+            self.isActive = true
+            return 
+        }
         self.initializeSherpa()
+        self.isActive = true
+    }
+    
+    func stopEngine() {
+        self.isActive = false
     }
 
     func initializeSherpa() {
@@ -49,8 +63,8 @@ class WakeWordManager: ObservableObject {
             keywordsFile: keywords,
             maxActivePaths: 4,
             numTrailingBlanks: 1,
-            keywordsScore: 5.0,     // 大幅调高分数（原本是 2.0）
-            keywordsThreshold: 0.1  // 大幅降低阈值（原本是 0.25），变得极其敏感
+            keywordsScore: 5.0,
+            keywordsThreshold: 0.05  // 进一步降低到 0.05，即便非常小的声音也要尝试匹配
         )
 
         // 3. 创建识别器实例
@@ -64,17 +78,18 @@ class WakeWordManager: ObservableObject {
 
     // 接收 16kHz PCM 数据进行实时识别
     func processAudio(samples: [Float]) {
-        guard let spotter = spotter else { return }
+        guard isActive, let spotter = spotter else { return }
         
-        // 1. 软件增益：将音量放大 5 倍，并限制在 [-1, 1] 范围内
-        let gain: Float = 5.0
+        // 1. 软件增益：提升到 10 倍
+        let rawRms = sqrt(samples.map { $0 * $0 }.reduce(0, +) / Float(samples.count))
+        let gain: Float = 10.0
         let boostedSamples = samples.map { max(-1.0, min(1.0, $0 * gain)) }
         
-        // 2. 能量统计（使用放大后的数据）
+        // 2. 能量统计
         totalSamplesReceived += boostedSamples.count
         if Date().timeIntervalSince(lastLogTime) >= 5.0 {
-            let rms = sqrt(boostedSamples.map { $0 * $0 }.reduce(0, +) / Float(boostedSamples.count))
-            print("DEBUG [WakeUp] 状态：累计采样点 \(totalSamplesReceived), 增强后能量(RMS): \(String(format: "%.4f", rms))")
+            let boostedRms = sqrt(boostedSamples.map { $0 * $0 }.reduce(0, +) / Float(boostedSamples.count))
+            print("DEBUG [WakeUp] 状态：累计采样点 \(totalSamplesReceived), 原始能量: \(String(format: "%.4f", rawRms)), 10倍增益后: \(String(format: "%.4f", boostedRms))")
             lastLogTime = Date()
         }
         

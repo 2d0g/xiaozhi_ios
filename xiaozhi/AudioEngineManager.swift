@@ -20,10 +20,8 @@ class AudioEngineManager: ObservableObject {
         self.setupAudioEngine()
         
         // 绑定唤醒成功回调
-        WakeWordManager.shared.onWakeWordDetected = { keyword in
-            if keyword.contains("天猫精灵") || keyword.contains("小智") {
-                self.triggerAIConversation()
-            }
+        WakeWordManager.shared.onWakeWordDetected = { [weak self] keyword in
+            self?.triggerAIConversation()
         }
     }
 
@@ -73,8 +71,12 @@ class AudioEngineManager: ObservableObject {
     private func handleMicInput(_ buffer: AVAudioPCMBuffer) {
         guard let resampler = wakeResampler else { return }
         
-        // 1. 转换到 16kHz
-        let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: 1024)!
+        // 1. 自动计算所需的输出容量 (输入长度 * 16k / 原始采样率)
+        let ratio = 16000.0 / buffer.format.sampleRate
+        let outCapacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 100
+        
+        guard let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: outCapacity) else { return }
+        
         var error: NSError?
         let status = resampler.convert(to: outBuffer, error: &error) { _, outStatus in
             outStatus.pointee = .haveData
@@ -92,9 +94,18 @@ class AudioEngineManager: ObservableObject {
     }
     
     private func triggerAIConversation() {
-        print("🔊 唤醒词触发！正在建立 AI 对话...")
-        // 这里可以播放一个提示音
+        print("🔊 唤醒词触发！正在建立连接并开启 AI 对话...")
+        
+        // 1. 如果尚未连接，则发起连接（这里需要你填入默认的 URL 和 Token，或者从配置读取）
+        if !WebSocketManager.shared.isConnected {
+            // 注意：这里建议从你的配置中心获取真正的 URL 和 Token
+            // WebSocketManager.shared.connect(url: "wss://...", token: "...")
+            print(">>> 正在发起 WebSocket 业务连接...")
+        }
+        
+        // 2. 发送开始监听指令
         WebSocketManager.shared.sendListenStart()
+        
         DispatchQueue.main.async {
             self.isRecording = true
         }
