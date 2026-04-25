@@ -122,34 +122,41 @@ struct ContentView: View {
         .background(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary.opacity(0.2)))
     }
     
+    @State private var inputText: String = ""
+
     private var activatedBusinessSection: some View {
-        VStack(spacing: 10) {
-            Button(action: { self.toggleAudio() }) {
-                Label(audioEngine.isRecording ? "说完了" : "按住说话", systemImage: audioEngine.isRecording ? "waveform" : "mic.fill")
-                    .frame(maxWidth: .infinity)
-                    .padding()
+        HStack(spacing: 10) {
+            TextField("输入消息发送给小智...", text: $inputText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
+                .onSubmit {
+                    sendMessage()
+                }
+            
+            Button(action: {
+                sendMessage()
+            }) {
+                Image(systemName: "paperplane.fill")
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(Color.accentColor)
+                    .clipShape(Circle())
             }
-            .buttonStyle(BorderedProminentButtonStyle())
-            .tint(audioEngine.isRecording ? .red : .green)
-            .padding(.horizontal)
+            .padding(.trailing)
         }
         .padding(.bottom, 10)
+    }
+
+    private func sendMessage() {
+        guard !inputText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        wsManager.sendText(inputText)
+        inputText = ""
     }
 
     private var footerSection: some View {
         Text("版本 0.0.3 (Chat History Enabled)").font(.caption2).foregroundColor(.secondary).padding(.bottom, 5)
     }
 
-    private func toggleAudio() {
-        if audioEngine.isRecording {
-            audioEngine.stop()
-            wsManager.sendListenStop()
-        } else {
-            wsManager.sendListenStart()
-            audioEngine.start()
-        }
-    }
-    
     private func loadInitialData() {
         serialNumber = DeviceFingerprint.shared.getOrGenerateSN()
     }

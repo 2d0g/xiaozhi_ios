@@ -3,93 +3,86 @@ import AVFoundation
 
 class AudioEngineManager: ObservableObject {
     static let shared = AudioEngineManager()
-    private var audioEngine = AVAudioEngine()
-    private var playerNode = AVAudioPlayerNode()
-    @Published var isRecording = false
+    private var audioEngine: AVAudioEngine?
+    private var playerNode: AVAudioPlayerNode?
     
-    private let targetPcmFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 24000, channels: 1, interleaved: false)!
+    // 强制使用 48kHz 原生频率，彻底消灭语速慢和重采样开销
+    private let nativeFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 48000, channels: 1, interleaved: false)!
+    
     private let opusFormat: AVAudioFormat = {
         var asbd = AudioStreamBasicDescription(
-            mSampleRate: 24000, mFormatID: kAudioFormatOpus, mFormatFlags: 0,
-            mBytesPerPacket: 0, mFramesPerPacket: 480, mBytesPerFrame: 0,
-            mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0
+            mSampleRate: 48000, mFormatID: kAudioFormatOpus, mFormatFlags: 0,
+            mBytesPerPacket: 0, mFramesPerPacket: 960, // 20ms @ 48kHz = 960
+            mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0
         )
         return AVAudioFormat(streamDescription: &asbd)!
     }()
     
-    private var encoder: AVAudioConverter?
-    private var decoder: AVAudioConverter?
+    private var opusDecoder: AVAudioConverter?
+    
+    // 高性能音频处理线程
+    private let audioQueue = DispatchQueue(label: "com.xiaozhi.audio.pro", qos: .userInteractive)
 
     init() {
-        audioEngine.attach(playerNode)
-        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: targetPcmFormat)
-        decoder = AVAudioConverter(from: opusFormat, to: targetPcmFormat)
+        self.setupNativeEngine()
     }
 
-    func start() {
-        let session = AVAudioSession.sharedInstance()
+    private func setupNativeEngine() {
         do {
-            try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth])
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
             
-            let inputNode = audioEngine.inputNode
-            let inputFormat = inputNode.outputFormat(forBus: 0)
+            let engine = AVAudioEngine()
+            let player = AVAudioPlayerNode()
+            engine.attach(player)
             
-            print("🎙️ 录音尝试启动，格式: \(inputFormat.sampleRate)Hz")
+            // 直接以 48kHz 连接，这是 iPhone 11 的物理舒适区
+            engine.connect(player, to: engine.mainMixerNode, format: nativeFormat)
             
-            // 还原：先安装 Tap
-            inputNode.removeTap(onBus: 0)
-            encoder = AVAudioConverter(from: inputFormat, to: opusFormat)
+            self.opusDecoder = AVAudioConverter(from: opusFormat, to: nativeFormat)
+            self.audioEngine = engine
+            self.playerNode = player
             
-            inputNode.installTap(onBus: 0, bufferSize: 4800, format: inputFormat) { [weak self] buffer, _ in
-                guard let self = self, let enc = self.encoder else { return }
-                let outBuffer = AVAudioCompressedBuffer(format: self.opusFormat, packetCapacity: 8, maximumPacketSize: 1024)
-                var error: NSError?
-                let status = enc.convert(to: outBuffer, error: &error) { _, outStatus in
-                    outStatus.pointee = .haveData
-                    return buffer
-                }
-                if status == .haveData && outBuffer.byteLength > 0 {
-                    let data = Data(bytes: outBuffer.data, count: Int(outBuffer.byteLength))
-                    if WebSocketManager.shared.isConnected {
-                        WebSocketManager.shared.sendAudioData(data)
-                    }
-                }
-            }
-            
-            // 后启动引擎
-            audioEngine.prepare()
-            try audioEngine.start()
-            isRecording = true
+            engine.prepare()
+            try engine.start()
+            player.play()
+            print("🚀 iPhone 11 物理直通播放管线已激活 (48kHz)")
         } catch {
-            print("!!! 引擎启动失败: \(error)")
+            print("!!! 引擎初始化失败: \(error)")
         }
     }
     
-    func stop() {
-        audioEngine.inputNode.removeTap(onBus: 0)
-        isRecording = false
-    }
+    func resetPlayback() {}
+    func flushPlayback() {}
     
     func playAIResponse(data: Data) {
-        guard let dec = decoder else { return }
-        
-        let inBuffer = AVAudioCompressedBuffer(format: opusFormat, packetCapacity: 1, maximumPacketSize: data.count)
-        inBuffer.byteLength = UInt32(data.count); inBuffer.packetCount = 1
-        data.copyBytes(to: inBuffer.data.assumingMemoryBound(to: UInt8.self), count: data.count)
-        inBuffer.packetDescriptions?.pointee = AudioStreamPacketDescription(mStartOffset: 0, mVariableFramesInPacket: 480, mDataByteSize: UInt32(data.count))
-        
-        let outBuffer = AVAudioPCMBuffer(pcmFormat: targetPcmFormat, frameCapacity: 1024)!
-        var error: NSError?
-        
-        if dec.convert(to: outBuffer, error: &error, withInputFrom: { _, outStatus in 
-            outStatus.pointee = .haveData
-            return inBuffer 
-        }) == .haveData {
-            if !audioEngine.isRunning { try? audioEngine.start() }
-            if !playerNode.isPlaying { playerNode.play() }
-            playerNode.scheduleBuffer(outBuffer, at: nil, options: [])
-            print("🔊 正在播放分片: \(outBuffer.frameLength) 采样")
+        audioQueue.async {
+            guard let dec = self.opusDecoder, let player = self.playerNode else { return }
+            
+            // 构造输入缓冲区 (告诉系统这是 48k 的包，让它解出 960 帧)
+            let inBuffer = AVAudioCompressedBuffer(format: self.opusFormat, packetCapacity: 1, maximumPacketSize: data.count)
+            inBuffer.byteLength = UInt32(data.count)
+            inBuffer.packetCount = 1
+            data.copyBytes(to: inBuffer.data.assumingMemoryBound(to: UInt8.self), count: data.count)
+            inBuffer.packetDescriptions?.pointee = AudioStreamPacketDescription(mStartOffset: 0, mVariableFramesInPacket: 960, mDataByteSize: UInt32(data.count))
+            
+            let outBuffer = AVAudioPCMBuffer(pcmFormat: self.nativeFormat, frameCapacity: 1024)!
+            var error: NSError?
+            
+            let status = dec.convert(to: outBuffer, error: &error) { _, outStatus in 
+                outStatus.pointee = .haveData
+                return inBuffer 
+            }
+            
+            if status == .haveData && outBuffer.frameLength > 0 {
+                // 采用最原始的 scheduleBuffer，不带选项，利用 playerNode 内部的硬件缓冲区进行平滑
+                player.scheduleBuffer(outBuffer, at: nil, options: [], completionHandler: nil)
+                
+                if !player.isPlaying {
+                    player.play()
+                }
+            }
         }
     }
 }

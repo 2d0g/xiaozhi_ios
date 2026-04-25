@@ -13,6 +13,7 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
     @Published var errorMessage: String?
     
     @Published var messages: [ChatMessage] = []
+    private var sessionId: String?
     
     private var webSocketTask: URLSessionWebSocketTask?
     private lazy var session: URLSession = {
@@ -91,6 +92,20 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
         }
     }
     
+    func sendText(_ text: String) {
+        guard isConnected else { return }
+        let msg: [String: Any] = [
+            "type": "listen",
+            "state": "detect",
+            "text": text,
+            "source": "text"
+        ]
+        sendJson(msg)
+        DispatchQueue.main.async {
+            self.messages.append(ChatMessage(role: "user", text: text))
+        }
+    }
+    
     func sendListenStop() {
         guard isConnected else { return }
         sendJson(["type": "listen", "state": "stop"])
@@ -132,6 +147,10 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
               let type = json["type"] as? String else { return }
               
         DispatchQueue.main.async {
+            if let sid = json["session_id"] as? String {
+                self.sessionId = sid
+            }
+            
             if type == "hello" {
                 print("🎉 小智业务握手成功，现在可以开始对话了！")
                 self.isConnected = true
@@ -145,7 +164,12 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
                     }
                 }
             } else if type == "tts" {
-                if let state = json["state"] as? String, (state == "sentence_start" || state == "sentence_end"), let content = json["text"] as? String, !content.isEmpty {
+                let state = json["state"] as? String
+                if state == "start" || state == "sentence_start" {
+                    AudioEngineManager.shared.resetPlayback()
+                }
+                
+                if (state == "sentence_start" || state == "sentence_end"), let content = json["text"] as? String, !content.isEmpty {
                     if let last = self.messages.last, last.role == "ai", last.text == content {
                         // ignore duplicate
                     } else if let last = self.messages.last, last.role == "ai", state == "sentence_end" {
@@ -153,6 +177,10 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
                     } else {
                         self.messages.append(ChatMessage(role: "ai", text: content))
                     }
+                }
+                
+                if state == "stop" || state == "sentence_end" {
+                    AudioEngineManager.shared.flushPlayback()
                 }
             }
         }
