@@ -40,17 +40,17 @@ class WakeWordManager: ObservableObject {
             tokens: tokens,
             transducer: sherpaOnnxOnlineTransducerModelConfig(encoder: encoder, decoder: decoder, joiner: joiner),
             numThreads: 2,
-            modelType: ""  // 让系统根据模型元数据自动检测
+            modelType: "zipformer2"  // 针对 mobile 优化版模型
         )
         
         var config = sherpaOnnxKeywordSpotterConfig(
             featConfig: featConfig,
             modelConfig: modelConfig,
             keywordsFile: keywords,
-            maxActivePaths: 2,
+            maxActivePaths: 4,
             numTrailingBlanks: 1,
-            keywordsScore: 2.0,
-            keywordsThreshold: 0.25
+            keywordsScore: 5.0,     // 大幅调高分数（原本是 2.0）
+            keywordsThreshold: 0.1  // 大幅降低阈值（原本是 0.25），变得极其敏感
         )
 
         // 3. 创建识别器实例
@@ -59,19 +59,42 @@ class WakeWordManager: ObservableObject {
         print("✅ Sherpa-ONNX 唤醒引擎初始化成功 (Int8)")
     }
 
+    private var totalSamplesReceived = 0
+    private var lastLogTime = Date()
+
     // 接收 16kHz PCM 数据进行实时识别
     func processAudio(samples: [Float]) {
         guard let spotter = spotter else { return }
         
-        spotter.acceptWaveform(samples: samples)
+        // 1. 软件增益：将音量放大 5 倍，并限制在 [-1, 1] 范围内
+        let gain: Float = 5.0
+        let boostedSamples = samples.map { max(-1.0, min(1.0, $0 * gain)) }
+        
+        // 2. 能量统计（使用放大后的数据）
+        totalSamplesReceived += boostedSamples.count
+        if Date().timeIntervalSince(lastLogTime) >= 5.0 {
+            let rms = sqrt(boostedSamples.map { $0 * $0 }.reduce(0, +) / Float(boostedSamples.count))
+            print("DEBUG [WakeUp] 状态：累计采样点 \(totalSamplesReceived), 增强后能量(RMS): \(String(format: "%.4f", rms))")
+            lastLogTime = Date()
+        }
+        
+        spotter.acceptWaveform(samples: boostedSamples)
+        
+        // 3. 状态追踪
+        if spotter.isReady() {
+            // print("DEBUG [WakeUp] 引擎进入 Ready 状态，开始解码...")
+        }
         
         while spotter.isReady() {
             spotter.decode()
             let result = spotter.getResult()
             if !result.keyword.isEmpty {
-                print("🎉 检测到唤醒词: \(result.keyword)")
+                print("🎉🎉🎉 [WAKE] 检测到唤醒词: 【\(result.keyword)】")
+                print("DEBUG [WakeUp] 详情: \(result.tokens.joined(separator: " "))")
+                
                 self.onWakeWordDetected?(result.keyword)
-                spotter.reset() // 识别成功后重置，防止重复触发
+                spotter.reset()
+                print("DEBUG [WakeUp] 引擎重置，继续监听...")
             }
         }
     }
