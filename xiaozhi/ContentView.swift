@@ -175,10 +175,11 @@ struct ContentView: View {
                         self.webSocketToken = ws.token
                         withAnimation { self.isFullyActivated = true }
                         
-                        // 业务激活后，开启语音唤醒引擎
-                        WakeWordManager.shared.startEngine()
-                        
+                        // 1. 仅保存连接信息，不立即发起网络请求
                         wsManager.connect(url: ws.url, token: ws.token)
+                        
+                        // 2. 仅开启本地语音唤醒引擎
+                        WakeWordManager.shared.startEngine()
                     }
                     self.isActivating = false
                 }

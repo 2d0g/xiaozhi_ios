@@ -1,0 +1,3561 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "Opus",
+    "printedName": "Opus",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "Copus",
+        "printedName": "Copus",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "Copus",
+        "printedName": "Copus",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreAudio",
+        "printedName": "CoreAudio",
+        "declKind": "Import",
+        "moduleName": "Opus"
+      },
+      {
+        "kind": "Import",
+        "name": "Copus",
+        "printedName": "Copus",
+        "declKind": "Import",
+        "moduleName": "Opus",
+        "declAttributes": [
+          "Exported"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "OpusCodec",
+        "printedName": "OpusCodec",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "allCases",
+            "printedName": "allCases",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Opus.OpusCodec]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpusCodec",
+                    "printedName": "Opus.OpusCodec",
+                    "usr": "s:4Opus0A5CodecO"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:4Opus0A5CodecO8allCasesSayACGvpZ",
+            "mangledName": "$s4Opus0A5CodecO8allCasesSayACGvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "implicit": true,
+            "declAttributes": [
+              "Nonisolated"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[Opus.OpusCodec]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "OpusCodec",
+                        "printedName": "Opus.OpusCodec",
+                        "usr": "s:4Opus0A5CodecO"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:4Opus0A5CodecO8allCasesSayACGvgZ",
+                "mangledName": "$s4Opus0A5CodecO8allCasesSayACGvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "Application",
+            "printedName": "Application",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "rawValue",
+                "printedName": "rawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO11ApplicationV8rawValues5Int32Vvp",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationV8rawValues5Int32Vvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV8rawValues5Int32Vvg",
+                    "mangledName": "$s4Opus0A5CodecO11ApplicationV8rawValues5Int32Vvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "get"
+                  },
+                  {
+                    "kind": "Accessor",
+                    "name": "Set",
+                    "printedName": "Set()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV8rawValues5Int32Vvs",
+                    "mangledName": "$s4Opus0A5CodecO11ApplicationV8rawValues5Int32Vvs",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "set"
+                  },
+                  {
+                    "kind": "Accessor",
+                    "name": "Modify",
+                    "printedName": "Modify()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV8rawValues5Int32VvM",
+                    "mangledName": "$s4Opus0A5CodecO11ApplicationV8rawValues5Int32VvM",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "_modify"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "audio",
+                "printedName": "audio",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO11ApplicationV5audioAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationV5audioAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Application",
+                        "printedName": "Opus.OpusCodec.Application",
+                        "usr": "s:4Opus0A5CodecO11ApplicationV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV5audioAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO11ApplicationV5audioAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "voip",
+                "printedName": "voip",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO11ApplicationV4voipAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationV4voipAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Application",
+                        "printedName": "Opus.OpusCodec.Application",
+                        "usr": "s:4Opus0A5CodecO11ApplicationV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV4voipAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO11ApplicationV4voipAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "restrictedLowDelay",
+                "printedName": "restrictedLowDelay",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO11ApplicationV18restrictedLowDelayAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationV18restrictedLowDelayAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Application",
+                        "printedName": "Opus.OpusCodec.Application",
+                        "usr": "s:4Opus0A5CodecO11ApplicationV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV18restrictedLowDelayAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO11ApplicationV18restrictedLowDelayAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(rawValue:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO11ApplicationV8rawValueAEs5Int32V_tcfc",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationV8rawValueAEs5Int32V_tcfc",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(integerLiteral:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO11ApplicationV14integerLiteralAEs5Int32V_tcfc",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationV14integerLiteralAEs5Int32V_tcfc",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(_:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO11ApplicationVyAExcSzRzlufc",
+                "mangledName": "$s4Opus0A5CodecO11ApplicationVyAExcSzRzlufc",
+                "moduleName": "Opus",
+                "genericSig": "<τ_0_0 where τ_0_0 : Swift.BinaryInteger>",
+                "sugared_genericSig": "<T where T : Swift.BinaryInteger>",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              }
+            ],
+            "declKind": "Struct",
+            "usr": "s:4Opus0A5CodecO11ApplicationV",
+            "mangledName": "$s4Opus0A5CodecO11ApplicationV",
+            "moduleName": "Opus",
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              },
+              {
+                "kind": "Conformance",
+                "name": "RawRepresentable",
+                "printedName": "RawRepresentable",
+                "children": [
+                  {
+                    "kind": "TypeWitness",
+                    "name": "RawValue",
+                    "printedName": "RawValue",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:SY",
+                "mangledName": "$sSY"
+              },
+              {
+                "kind": "Conformance",
+                "name": "ExpressibleByIntegerLiteral",
+                "printedName": "ExpressibleByIntegerLiteral",
+                "children": [
+                  {
+                    "kind": "TypeWitness",
+                    "name": "IntegerLiteralType",
+                    "printedName": "IntegerLiteralType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:s27ExpressibleByIntegerLiteralP",
+                "mangledName": "$ss27ExpressibleByIntegerLiteralP"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "Decoder",
+            "printedName": "Decoder",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "format",
+                "printedName": "format",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioFormat",
+                    "printedName": "AVFAudio.AVAudioFormat",
+                    "usr": "c:objc(cs)AVAudioFormat"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO7DecoderC6formatSo13AVAudioFormatCvp",
+                "mangledName": "$s4Opus0A5CodecO7DecoderC6formatSo13AVAudioFormatCvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "Final",
+                  "HasStorage"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AVAudioFormat",
+                        "printedName": "AVFAudio.AVAudioFormat",
+                        "usr": "c:objc(cs)AVAudioFormat"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO7DecoderC6formatSo13AVAudioFormatCvg",
+                    "mangledName": "$s4Opus0A5CodecO7DecoderC6formatSo13AVAudioFormatCvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Final"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "decoder",
+                "printedName": "decoder",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaquePointer",
+                    "printedName": "Swift.OpaquePointer",
+                    "usr": "s:s13OpaquePointerV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO7DecoderC7decoders13OpaquePointerVvp",
+                "mangledName": "$s4Opus0A5CodecO7DecoderC7decoders13OpaquePointerVvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "Final",
+                  "HasStorage"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "OpaquePointer",
+                        "printedName": "Swift.OpaquePointer",
+                        "usr": "s:s13OpaquePointerV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO7DecoderC7decoders13OpaquePointerVvg",
+                    "mangledName": "$s4Opus0A5CodecO7DecoderC7decoders13OpaquePointerVvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Final"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(format:application:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Decoder",
+                    "printedName": "Opus.OpusCodec.Decoder",
+                    "usr": "s:4Opus0A5CodecO7DecoderC"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioFormat",
+                    "printedName": "AVFAudio.AVAudioFormat",
+                    "usr": "c:objc(cs)AVAudioFormat"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "hasDefaultArg": true,
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO7DecoderC6format11applicationAESo13AVAudioFormatC_AC11ApplicationVtKcfc",
+                "mangledName": "$s4Opus0A5CodecO7DecoderC6format11applicationAESo13AVAudioFormatC_AC11ApplicationVtKcfc",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "AccessControl",
+                  "RawDocComment"
+                ],
+                "throwing": true,
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Function",
+                "name": "reset",
+                "printedName": "reset()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7DecoderC5resetyyKF",
+                "mangledName": "$s4Opus0A5CodecO7DecoderC5resetyyKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Function",
+                "name": "decode",
+                "printedName": "decode(_:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioPCMBuffer",
+                    "printedName": "AVFAudio.AVAudioPCMBuffer",
+                    "usr": "c:objc(cs)AVAudioPCMBuffer"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7DecoderC6decodeySo16AVAudioPCMBufferC10Foundation4DataVKF",
+                "mangledName": "$s4Opus0A5CodecO7DecoderC6decodeySo16AVAudioPCMBufferC10Foundation4DataVKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Function",
+                "name": "decode",
+                "printedName": "decode(_:to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UnsafeBufferPointer",
+                    "printedName": "Swift.UnsafeBufferPointer<Swift.UInt8>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "usr": "s:SR"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioPCMBuffer",
+                    "printedName": "AVFAudio.AVAudioPCMBuffer",
+                    "usr": "c:objc(cs)AVAudioPCMBuffer"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7DecoderC6decode_2toySRys5UInt8VG_So16AVAudioPCMBufferCtKF",
+                "mangledName": "$s4Opus0A5CodecO7DecoderC6decode_2toySRys5UInt8VG_So16AVAudioPCMBufferCtKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Class",
+            "usr": "s:4Opus0A5CodecO7DecoderC",
+            "mangledName": "$s4Opus0A5CodecO7DecoderC",
+            "moduleName": "Opus",
+            "isOpen": true,
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "Encoder",
+            "printedName": "Encoder",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "format",
+                "printedName": "format",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioFormat",
+                    "printedName": "AVFAudio.AVAudioFormat",
+                    "usr": "c:objc(cs)AVAudioFormat"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO7EncoderC6formatSo13AVAudioFormatCvp",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC6formatSo13AVAudioFormatCvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "Final",
+                  "HasStorage"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AVAudioFormat",
+                        "printedName": "AVFAudio.AVAudioFormat",
+                        "usr": "c:objc(cs)AVAudioFormat"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO7EncoderC6formatSo13AVAudioFormatCvg",
+                    "mangledName": "$s4Opus0A5CodecO7EncoderC6formatSo13AVAudioFormatCvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Final"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "application",
+                "printedName": "application",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO7EncoderC11applicationAC11ApplicationVvp",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC11applicationAC11ApplicationVvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "Final",
+                  "HasStorage"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Application",
+                        "printedName": "Opus.OpusCodec.Application",
+                        "usr": "s:4Opus0A5CodecO11ApplicationV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO7EncoderC11applicationAC11ApplicationVvg",
+                    "mangledName": "$s4Opus0A5CodecO7EncoderC11applicationAC11ApplicationVvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Final"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "encoder",
+                "printedName": "encoder",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaquePointer",
+                    "printedName": "Swift.OpaquePointer",
+                    "usr": "s:s13OpaquePointerV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO7EncoderC7encoders13OpaquePointerVvp",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC7encoders13OpaquePointerVvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "Final",
+                  "HasStorage"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "OpaquePointer",
+                        "printedName": "Swift.OpaquePointer",
+                        "usr": "s:s13OpaquePointerV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO7EncoderC7encoders13OpaquePointerVvg",
+                    "mangledName": "$s4Opus0A5CodecO7EncoderC7encoders13OpaquePointerVvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Final"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(format:application:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Encoder",
+                    "printedName": "Opus.OpusCodec.Encoder",
+                    "usr": "s:4Opus0A5CodecO7EncoderC"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioFormat",
+                    "printedName": "AVFAudio.AVAudioFormat",
+                    "usr": "c:objc(cs)AVAudioFormat"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Application",
+                    "printedName": "Opus.OpusCodec.Application",
+                    "hasDefaultArg": true,
+                    "usr": "s:4Opus0A5CodecO11ApplicationV"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO7EncoderC6format11applicationAESo13AVAudioFormatC_AC11ApplicationVtKcfc",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC6format11applicationAESo13AVAudioFormatC_AC11ApplicationVtKcfc",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "AccessControl",
+                  "RawDocComment"
+                ],
+                "throwing": true,
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Function",
+                "name": "reset",
+                "printedName": "reset()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7EncoderC5resetyyKF",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC5resetyyKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(_:to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioPCMBuffer",
+                    "printedName": "AVFAudio.AVAudioPCMBuffer",
+                    "usr": "c:objc(cs)AVAudioPCMBuffer"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "paramValueOwnership": "InOut",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_10Foundation4DataVztKF",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_10Foundation4DataVztKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(_:to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioPCMBuffer",
+                    "printedName": "AVFAudio.AVAudioPCMBuffer",
+                    "usr": "c:objc(cs)AVAudioPCMBuffer"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[Swift.UInt8]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "paramValueOwnership": "InOut",
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_Says5UInt8VGztKF",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_Says5UInt8VGztKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(_:to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioPCMBuffer",
+                    "printedName": "AVFAudio.AVAudioPCMBuffer",
+                    "usr": "c:objc(cs)AVAudioPCMBuffer"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UnsafeMutableRawBufferPointer",
+                    "printedName": "Swift.UnsafeMutableRawBufferPointer",
+                    "usr": "s:Sw"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_SwtKF",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_SwtKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(_:to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioPCMBuffer",
+                    "printedName": "AVFAudio.AVAudioPCMBuffer",
+                    "usr": "c:objc(cs)AVAudioPCMBuffer"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UnsafeMutableBufferPointer",
+                    "printedName": "Swift.UnsafeMutableBufferPointer<Swift.UInt8>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "usr": "s:Sr"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_Srys5UInt8VGtKF",
+                "mangledName": "$s4Opus0A5CodecO7EncoderC6encode_2toSiSo16AVAudioPCMBufferC_Srys5UInt8VGtKF",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Class",
+            "usr": "s:4Opus0A5CodecO7EncoderC",
+            "mangledName": "$s4Opus0A5CodecO7EncoderC",
+            "moduleName": "Opus",
+            "isOpen": true,
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "Error",
+            "printedName": "Error",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "rawValue",
+                "printedName": "rawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV8rawValues5Int32Vvp",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV8rawValues5Int32Vvp",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV8rawValues5Int32Vvg",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV8rawValues5Int32Vvg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "get"
+                  },
+                  {
+                    "kind": "Accessor",
+                    "name": "Set",
+                    "printedName": "Set()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV8rawValues5Int32Vvs",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV8rawValues5Int32Vvs",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "set"
+                  },
+                  {
+                    "kind": "Accessor",
+                    "name": "Modify",
+                    "printedName": "Modify()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV8rawValues5Int32VvM",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV8rawValues5Int32VvM",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "_modify"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "ok",
+                "printedName": "ok",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV2okAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV2okAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV2okAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV2okAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "badArgument",
+                "printedName": "badArgument",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV11badArgumentAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV11badArgumentAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV11badArgumentAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV11badArgumentAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "bufferTooSmall",
+                "printedName": "bufferTooSmall",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV14bufferTooSmallAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV14bufferTooSmallAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV14bufferTooSmallAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV14bufferTooSmallAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "internalError",
+                "printedName": "internalError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV08internalC0AEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV08internalC0AEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV08internalC0AEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV08internalC0AEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "invalidPacket",
+                "printedName": "invalidPacket",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV13invalidPacketAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV13invalidPacketAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV13invalidPacketAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV13invalidPacketAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "unimplemented",
+                "printedName": "unimplemented",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV13unimplementedAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV13unimplementedAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV13unimplementedAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV13unimplementedAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "invalidState",
+                "printedName": "invalidState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV12invalidStateAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV12invalidStateAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV12invalidStateAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV12invalidStateAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "allocationFailure",
+                "printedName": "allocationFailure",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:4Opus0A5CodecO5ErrorV17allocationFailureAEvpZ",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV17allocationFailureAEvpZ",
+                "moduleName": "Opus",
+                "static": true,
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "Opus.OpusCodec.Error",
+                        "usr": "s:4Opus0A5CodecO5ErrorV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:4Opus0A5CodecO5ErrorV17allocationFailureAEvgZ",
+                    "mangledName": "$s4Opus0A5CodecO5ErrorV17allocationFailureAEvgZ",
+                    "moduleName": "Opus",
+                    "static": true,
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(rawValue:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO5ErrorV8rawValueAEs5Int32V_tcfc",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV8rawValueAEs5Int32V_tcfc",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(integerLiteral:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO5ErrorV14integerLiteralAEs5Int32V_tcfc",
+                "mangledName": "$s4Opus0A5CodecO5ErrorV14integerLiteralAEs5Int32V_tcfc",
+                "moduleName": "Opus",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(_:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Error",
+                    "printedName": "Opus.OpusCodec.Error",
+                    "usr": "s:4Opus0A5CodecO5ErrorV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:4Opus0A5CodecO5ErrorVyAExcSzRzlufc",
+                "mangledName": "$s4Opus0A5CodecO5ErrorVyAExcSzRzlufc",
+                "moduleName": "Opus",
+                "genericSig": "<τ_0_0 where τ_0_0 : Swift.BinaryInteger>",
+                "sugared_genericSig": "<T where T : Swift.BinaryInteger>",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              }
+            ],
+            "declKind": "Struct",
+            "usr": "s:4Opus0A5CodecO5ErrorV",
+            "mangledName": "$s4Opus0A5CodecO5ErrorV",
+            "moduleName": "Opus",
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Error",
+                "printedName": "Error",
+                "usr": "s:s5ErrorP",
+                "mangledName": "$ss5ErrorP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              },
+              {
+                "kind": "Conformance",
+                "name": "RawRepresentable",
+                "printedName": "RawRepresentable",
+                "children": [
+                  {
+                    "kind": "TypeWitness",
+                    "name": "RawValue",
+                    "printedName": "RawValue",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:SY",
+                "mangledName": "$sSY"
+              },
+              {
+                "kind": "Conformance",
+                "name": "ExpressibleByIntegerLiteral",
+                "printedName": "ExpressibleByIntegerLiteral",
+                "children": [
+                  {
+                    "kind": "TypeWitness",
+                    "name": "IntegerLiteralType",
+                    "printedName": "IntegerLiteralType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:s27ExpressibleByIntegerLiteralP",
+                "mangledName": "$ss27ExpressibleByIntegerLiteralP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Sendable",
+                "printedName": "Sendable",
+                "usr": "s:s8SendableP",
+                "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "SendableMetatype",
+                "printedName": "SendableMetatype",
+                "usr": "s:s16SendableMetatypeP",
+                "mangledName": "$ss16SendableMetatypeP"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:4Opus0A5CodecO",
+        "mangledName": "$s4Opus0A5CodecO",
+        "moduleName": "Opus",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CaseIterable",
+            "printedName": "CaseIterable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "AllCases",
+                "printedName": "AllCases",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[Opus.OpusCodec]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "OpusCodec",
+                        "printedName": "Opus.OpusCodec",
+                        "usr": "s:4Opus0A5CodecO"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s12CaseIterableP",
+            "mangledName": "$ss12CaseIterableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "AVAudioFormat",
+        "printedName": "AVAudioFormat",
+        "children": [
+          {
+            "kind": "TypeDecl",
+            "name": "OpusPCMFormat",
+            "printedName": "OpusPCMFormat",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "int16",
+                "printedName": "int16",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(AVFAudio.AVAudioFormat.OpusPCMFormat.Type) -> AVFAudio.AVAudioFormat.OpusPCMFormat",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "OpusPCMFormat",
+                        "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                        "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "OpusPCMFormat",
+                            "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                            "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO5int16yA2EmF",
+                "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO5int16yA2EmF",
+                "moduleName": "Opus"
+              },
+              {
+                "kind": "Var",
+                "name": "float32",
+                "printedName": "float32",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(AVFAudio.AVAudioFormat.OpusPCMFormat.Type) -> AVFAudio.AVAudioFormat.OpusPCMFormat",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "OpusPCMFormat",
+                        "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                        "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "OpusPCMFormat",
+                            "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                            "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO7float32yA2EmF",
+                "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO7float32yA2EmF",
+                "moduleName": "Opus"
+              },
+              {
+                "kind": "Function",
+                "name": "==",
+                "printedName": "==(_:_:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpusPCMFormat",
+                    "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                    "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpusPCMFormat",
+                    "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                    "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO2eeoiySbAE_AEtFZ",
+                "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO2eeoiySbAE_AEtFZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Var",
+                "name": "hashValue",
+                "printedName": "hashValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO9hashValueSivp",
+                "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO9hashValueSivp",
+                "moduleName": "Opus",
+                "implicit": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO9hashValueSivg",
+                    "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO9hashValueSivg",
+                    "moduleName": "Opus",
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Function",
+                "name": "hash",
+                "printedName": "hash(into:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Hasher",
+                    "printedName": "Swift.Hasher",
+                    "paramValueOwnership": "InOut",
+                    "usr": "s:s6HasherV"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO4hash4intoys6HasherVz_tF",
+                "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO4hash4intoys6HasherVz_tF",
+                "moduleName": "Opus",
+                "implicit": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Enum",
+            "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO",
+            "mangledName": "$sSo13AVAudioFormatC4OpusE0C9PCMFormatO",
+            "moduleName": "Opus",
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Hashable",
+                "printedName": "Hashable",
+                "usr": "s:SH",
+                "mangledName": "$sSH"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(opusPCMFormat:sampleRate:channels:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "AVFAudio.AVAudioFormat?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AVAudioFormat",
+                    "printedName": "AVFAudio.AVAudioFormat",
+                    "usr": "c:objc(cs)AVAudioFormat"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "OpusPCMFormat",
+                "printedName": "AVFAudio.AVAudioFormat.OpusPCMFormat",
+                "usr": "s:So13AVAudioFormatC4OpusE0C9PCMFormatO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:So13AVAudioFormatC4OpusE13opusPCMFormat10sampleRate8channelsABSgAbCE0cE0O_Sds6UInt32Vtcfc",
+            "mangledName": "$sSo13AVAudioFormatC4OpusE13opusPCMFormat10sampleRate8channelsABSgAbCE0cE0O_Sds6UInt32Vtcfc",
+            "moduleName": "Opus",
+            "declAttributes": [
+              "Convenience"
+            ],
+            "isFromExtension": true,
+            "init_kind": "Convenience"
+          },
+          {
+            "kind": "Var",
+            "name": "isValidOpusPCMFormat",
+            "printedName": "isValidOpusPCMFormat",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So13AVAudioFormatC4OpusE07isValidC9PCMFormatSbvp",
+            "mangledName": "$sSo13AVAudioFormatC4OpusE07isValidC9PCMFormatSbvp",
+            "moduleName": "Opus",
+            "isOpen": true,
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So13AVAudioFormatC4OpusE07isValidC9PCMFormatSbvg",
+                "mangledName": "$sSo13AVAudioFormatC4OpusE07isValidC9PCMFormatSbvg",
+                "moduleName": "Opus",
+                "isOpen": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:objc(cs)AVAudioFormat",
+        "moduleName": "AVFAudio",
+        "isOpen": true,
+        "intro_iOS": "8.0",
+        "objc_name": "AVAudioFormat",
+        "declAttributes": [
+          "Available",
+          "ObjC",
+          "SynthesizedProtocol",
+          "Sendable",
+          "Dynamic"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "isExternal": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "UInt32",
+        "printedName": "UInt32",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "opusMin",
+            "printedName": "opusMin",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:s6UInt32V4OpusE7opusMinABvpZ",
+            "mangledName": "$ss6UInt32V4OpusE7opusMinABvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:s6UInt32V4OpusE7opusMinABvgZ",
+                "mangledName": "$ss6UInt32V4OpusE7opusMinABvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "opusMax",
+            "printedName": "opusMax",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:s6UInt32V4OpusE7opusMaxABvpZ",
+            "mangledName": "$ss6UInt32V4OpusE7opusMaxABvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:s6UInt32V4OpusE7opusMaxABvgZ",
+                "mangledName": "$ss6UInt32V4OpusE7opusMaxABvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:s6UInt32V",
+        "mangledName": "$ss6UInt32V",
+        "moduleName": "Swift",
+        "declAttributes": [
+          "Frozen"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "FixedWidthInteger",
+            "printedName": "FixedWidthInteger",
+            "usr": "s:s17FixedWidthIntegerP",
+            "mangledName": "$ss17FixedWidthIntegerP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "UnsignedInteger",
+            "printedName": "UnsignedInteger",
+            "usr": "s:SU",
+            "mangledName": "$sSU"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ExpressibleByBuiltinIntegerLiteral",
+            "printedName": "_ExpressibleByBuiltinIntegerLiteral",
+            "usr": "s:s35_ExpressibleByBuiltinIntegerLiteralP",
+            "mangledName": "$ss35_ExpressibleByBuiltinIntegerLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BinaryInteger",
+            "printedName": "BinaryInteger",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Words",
+                "printedName": "Words",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Words",
+                    "printedName": "Swift.UInt32.Words",
+                    "usr": "s:s6UInt32V5WordsV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sz",
+            "mangledName": "$sSz"
+          },
+          {
+            "kind": "Conformance",
+            "name": "LosslessStringConvertible",
+            "printedName": "LosslessStringConvertible",
+            "usr": "s:s25LosslessStringConvertibleP",
+            "mangledName": "$ss25LosslessStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Numeric",
+            "printedName": "Numeric",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Magnitude",
+                "printedName": "Magnitude",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sj",
+            "mangledName": "$sSj"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Strideable",
+            "printedName": "Strideable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Stride",
+                "printedName": "Stride",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sx",
+            "mangledName": "$sSx"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AdditiveArithmetic",
+            "printedName": "AdditiveArithmetic",
+            "usr": "s:s18AdditiveArithmeticP",
+            "mangledName": "$ss18AdditiveArithmeticP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByIntegerLiteral",
+            "printedName": "ExpressibleByIntegerLiteral",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "IntegerLiteralType",
+                "printedName": "IntegerLiteralType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s27ExpressibleByIntegerLiteralP",
+            "mangledName": "$ss27ExpressibleByIntegerLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Comparable",
+            "printedName": "Comparable",
+            "usr": "s:SL",
+            "mangledName": "$sSL"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CustomPlaygroundQuickLookable",
+            "printedName": "_CustomPlaygroundQuickLookable",
+            "usr": "s:s30_CustomPlaygroundQuickLookableP",
+            "mangledName": "$ss30_CustomPlaygroundQuickLookableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_HasCustomAnyHashableRepresentation",
+            "printedName": "_HasCustomAnyHashableRepresentation",
+            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
+            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SIMDScalar",
+            "printedName": "SIMDScalar",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "SIMDMaskScalar",
+                "printedName": "SIMDMaskScalar",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD2Storage",
+                "printedName": "SIMD2Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD2Storage",
+                    "printedName": "Swift.UInt32.SIMD2Storage",
+                    "usr": "s:s6UInt32V12SIMD2StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD4Storage",
+                "printedName": "SIMD4Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD4Storage",
+                    "printedName": "Swift.UInt32.SIMD4Storage",
+                    "usr": "s:s6UInt32V12SIMD4StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD8Storage",
+                "printedName": "SIMD8Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD8Storage",
+                    "printedName": "Swift.UInt32.SIMD8Storage",
+                    "usr": "s:s6UInt32V12SIMD8StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD16Storage",
+                "printedName": "SIMD16Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD16Storage",
+                    "printedName": "Swift.UInt32.SIMD16Storage",
+                    "usr": "s:s6UInt32V13SIMD16StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD32Storage",
+                "printedName": "SIMD32Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD32Storage",
+                    "printedName": "Swift.UInt32.SIMD32Storage",
+                    "usr": "s:s6UInt32V13SIMD32StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD64Storage",
+                "printedName": "SIMD64Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD64Storage",
+                    "printedName": "Swift.UInt32.SIMD64Storage",
+                    "usr": "s:s6UInt32V13SIMD64StorageV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s10SIMDScalarP",
+            "mangledName": "$ss10SIMDScalarP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_FormatSpecifiable",
+            "printedName": "_FormatSpecifiable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_Arg",
+                "printedName": "_Arg",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation18_FormatSpecifiableP",
+            "mangledName": "$s10Foundation18_FormatSpecifiableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ObjectiveCBridgeable",
+            "printedName": "_ObjectiveCBridgeable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_ObjectiveCType",
+                "printedName": "_ObjectiveCType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSNumber",
+                    "printedName": "Foundation.NSNumber",
+                    "usr": "c:objc(cs)NSNumber"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s21_ObjectiveCBridgeableP",
+            "mangledName": "$ss21_ObjectiveCBridgeableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "NetworkFixedWidthInteger",
+            "printedName": "NetworkFixedWidthInteger",
+            "usr": "s:7Network0A17FixedWidthIntegerP",
+            "mangledName": "$s7Network0A17FixedWidthIntegerP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AtomicRepresentable",
+            "printedName": "AtomicRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "AtomicRepresentation",
+                "printedName": "AtomicRepresentation",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "_Atomic32BitStorage",
+                    "printedName": "Synchronization._Atomic32BitStorage",
+                    "usr": "s:15Synchronization19_Atomic32BitStorageV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:15Synchronization19AtomicRepresentableP",
+            "mangledName": "$s15Synchronization19AtomicRepresentableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Double",
+        "printedName": "Double",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "opus8khz",
+            "printedName": "opus8khz",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sd4OpusE8opus8khzSdvpZ",
+            "mangledName": "$sSd4OpusE8opus8khzSdvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sd4OpusE8opus8khzSdvgZ",
+                "mangledName": "$sSd4OpusE8opus8khzSdvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "opus12khz",
+            "printedName": "opus12khz",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sd4OpusE9opus12khzSdvpZ",
+            "mangledName": "$sSd4OpusE9opus12khzSdvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sd4OpusE9opus12khzSdvgZ",
+                "mangledName": "$sSd4OpusE9opus12khzSdvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "opus16khz",
+            "printedName": "opus16khz",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sd4OpusE9opus16khzSdvpZ",
+            "mangledName": "$sSd4OpusE9opus16khzSdvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sd4OpusE9opus16khzSdvgZ",
+                "mangledName": "$sSd4OpusE9opus16khzSdvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "opus24khz",
+            "printedName": "opus24khz",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sd4OpusE9opus24khzSdvpZ",
+            "mangledName": "$sSd4OpusE9opus24khzSdvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sd4OpusE9opus24khzSdvgZ",
+                "mangledName": "$sSd4OpusE9opus24khzSdvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "opus48khz",
+            "printedName": "opus48khz",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sd4OpusE9opus48khzSdvpZ",
+            "mangledName": "$sSd4OpusE9opus48khzSdvpZ",
+            "moduleName": "Opus",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sd4OpusE9opus48khzSdvgZ",
+                "mangledName": "$sSd4OpusE9opus48khzSdvgZ",
+                "moduleName": "Opus",
+                "static": true,
+                "implicit": true,
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:Sd",
+        "mangledName": "$sSd",
+        "moduleName": "Swift",
+        "declAttributes": [
+          "Frozen"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CustomPlaygroundQuickLookable",
+            "printedName": "_CustomPlaygroundQuickLookable",
+            "usr": "s:s30_CustomPlaygroundQuickLookableP",
+            "mangledName": "$ss30_CustomPlaygroundQuickLookableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CVarArgPassedAsDouble",
+            "printedName": "_CVarArgPassedAsDouble",
+            "usr": "s:s22_CVarArgPassedAsDoubleP",
+            "mangledName": "$ss22_CVarArgPassedAsDoubleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CVarArgAligned",
+            "printedName": "_CVarArgAligned",
+            "usr": "s:s15_CVarArgAlignedP",
+            "mangledName": "$ss15_CVarArgAlignedP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "LosslessStringConvertible",
+            "printedName": "LosslessStringConvertible",
+            "usr": "s:s25LosslessStringConvertibleP",
+            "mangledName": "$ss25LosslessStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "TextOutputStreamable",
+            "printedName": "TextOutputStreamable",
+            "usr": "s:s20TextOutputStreamableP",
+            "mangledName": "$ss20TextOutputStreamableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BinaryFloatingPoint",
+            "printedName": "BinaryFloatingPoint",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawSignificand",
+                "printedName": "RawSignificand",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt64",
+                    "printedName": "Swift.UInt64",
+                    "usr": "s:s6UInt64V"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "RawExponent",
+                "printedName": "RawExponent",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt",
+                    "printedName": "Swift.UInt",
+                    "usr": "s:Su"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SB",
+            "mangledName": "$sSB"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByFloatLiteral",
+            "printedName": "ExpressibleByFloatLiteral",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "FloatLiteralType",
+                "printedName": "FloatLiteralType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s25ExpressibleByFloatLiteralP",
+            "mangledName": "$ss25ExpressibleByFloatLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "FloatingPoint",
+            "printedName": "FloatingPoint",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Exponent",
+                "printedName": "Exponent",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SF",
+            "mangledName": "$sSF"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SignedNumeric",
+            "printedName": "SignedNumeric",
+            "usr": "s:s13SignedNumericP",
+            "mangledName": "$ss13SignedNumericP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Numeric",
+            "printedName": "Numeric",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Magnitude",
+                "printedName": "Magnitude",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sj",
+            "mangledName": "$sSj"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AdditiveArithmetic",
+            "printedName": "AdditiveArithmetic",
+            "usr": "s:s18AdditiveArithmeticP",
+            "mangledName": "$ss18AdditiveArithmeticP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ExpressibleByBuiltinIntegerLiteral",
+            "printedName": "_ExpressibleByBuiltinIntegerLiteral",
+            "usr": "s:s35_ExpressibleByBuiltinIntegerLiteralP",
+            "mangledName": "$ss35_ExpressibleByBuiltinIntegerLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByIntegerLiteral",
+            "printedName": "ExpressibleByIntegerLiteral",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "IntegerLiteralType",
+                "printedName": "IntegerLiteralType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s27ExpressibleByIntegerLiteralP",
+            "mangledName": "$ss27ExpressibleByIntegerLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ExpressibleByBuiltinFloatLiteral",
+            "printedName": "_ExpressibleByBuiltinFloatLiteral",
+            "usr": "s:s33_ExpressibleByBuiltinFloatLiteralP",
+            "mangledName": "$ss33_ExpressibleByBuiltinFloatLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_HasCustomAnyHashableRepresentation",
+            "printedName": "_HasCustomAnyHashableRepresentation",
+            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
+            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Strideable",
+            "printedName": "Strideable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Stride",
+                "printedName": "Stride",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sx",
+            "mangledName": "$sSx"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Comparable",
+            "printedName": "Comparable",
+            "usr": "s:SL",
+            "mangledName": "$sSL"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SIMDScalar",
+            "printedName": "SIMDScalar",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "SIMDMaskScalar",
+                "printedName": "SIMDMaskScalar",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD2Storage",
+                "printedName": "SIMD2Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD2Storage",
+                    "printedName": "Swift.Double.SIMD2Storage",
+                    "usr": "s:Sd12SIMD2StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD4Storage",
+                "printedName": "SIMD4Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD4Storage",
+                    "printedName": "Swift.Double.SIMD4Storage",
+                    "usr": "s:Sd12SIMD4StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD8Storage",
+                "printedName": "SIMD8Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD8Storage",
+                    "printedName": "Swift.Double.SIMD8Storage",
+                    "usr": "s:Sd12SIMD8StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD16Storage",
+                "printedName": "SIMD16Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD16Storage",
+                    "printedName": "Swift.Double.SIMD16Storage",
+                    "usr": "s:Sd13SIMD16StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD32Storage",
+                "printedName": "SIMD32Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD32Storage",
+                    "printedName": "Swift.Double.SIMD32Storage",
+                    "usr": "s:Sd13SIMD32StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD64Storage",
+                "printedName": "SIMD64Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD64Storage",
+                    "printedName": "Swift.Double.SIMD64Storage",
+                    "usr": "s:Sd13SIMD64StorageV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s10SIMDScalarP",
+            "mangledName": "$ss10SIMDScalarP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_FormatSpecifiable",
+            "printedName": "_FormatSpecifiable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_Arg",
+                "printedName": "_Arg",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation18_FormatSpecifiableP",
+            "mangledName": "$s10Foundation18_FormatSpecifiableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ObjectiveCBridgeable",
+            "printedName": "_ObjectiveCBridgeable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_ObjectiveCType",
+                "printedName": "_ObjectiveCType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSNumber",
+                    "printedName": "Foundation.NSNumber",
+                    "usr": "c:objc(cs)NSNumber"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s21_ObjectiveCBridgeableP",
+            "mangledName": "$ss21_ObjectiveCBridgeableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AtomicRepresentable",
+            "printedName": "AtomicRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "AtomicRepresentation",
+                "printedName": "AtomicRepresentation",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "_Atomic64BitStorage",
+                    "printedName": "Synchronization._Atomic64BitStorage",
+                    "usr": "s:15Synchronization19_Atomic64BitStorageV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:15Synchronization19AtomicRepresentableP",
+            "mangledName": "$s15Synchronization19AtomicRepresentableP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/AVAudioFrameCount+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 153,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/AVAudioFrameCount+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 258,
+      "length": 4,
+      "value": "5760"
+    },
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/Double+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 55,
+      "length": 4,
+      "value": "8000"
+    },
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/Double+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 90,
+      "length": 5,
+      "value": "12000"
+    },
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/Double+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 126,
+      "length": 5,
+      "value": "16000"
+    },
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/Double+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 162,
+      "length": 5,
+      "value": "24000"
+    },
+    {
+      "filePath": "\/Users\/cpq\/Downloads\/xiaozhi\/xiaozhi\/Opus\/Sources\/Opus\/Double+Extensions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 198,
+      "length": 5,
+      "value": "48000"
+    }
+  ]
+}

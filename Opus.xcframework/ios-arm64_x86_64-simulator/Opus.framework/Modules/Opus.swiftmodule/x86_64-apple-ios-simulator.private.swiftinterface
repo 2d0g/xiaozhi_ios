@@ -1,0 +1,102 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.2.4 effective-5.10 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -enable-experimental-feature DebugDescriptionMacro -module-name Opus
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.4
+import AVFoundation
+@_exported import Copus
+import CoreAudio
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension AVFAudio.AVAudioFormat {
+  public enum OpusPCMFormat {
+    case int16
+    case float32
+    public static func == (a: AVFAudio.AVAudioFormat.OpusPCMFormat, b: AVFAudio.AVAudioFormat.OpusPCMFormat) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  convenience public init?(opusPCMFormat: AVFAudio.AVAudioFormat.OpusPCMFormat, sampleRate: Swift.Double, channels: AVFAudio.AVAudioChannelCount)
+  #endif
+  public var isValidOpusPCMFormat: Swift.Bool {
+    get
+  }
+}
+extension Swift.UInt32 {
+  public static let opusMin: Swift.UInt32
+  public static let opusMax: Swift.UInt32
+}
+extension Swift.Double {
+  public static let opus8khz: Swift.Double
+  public static let opus12khz: Swift.Double
+  public static let opus16khz: Swift.Double
+  public static let opus24khz: Swift.Double
+  public static let opus48khz: Swift.Double
+}
+extension Opus.OpusCodec {
+  public struct Application : Swift.Equatable, Swift.RawRepresentable, Swift.ExpressibleByIntegerLiteral {
+    public typealias IntegerLiteralType = Swift.Int32
+    public var rawValue: Opus.OpusCodec.Application.IntegerLiteralType
+    public static let audio: Opus.OpusCodec.Application
+    public static let voip: Opus.OpusCodec.Application
+    public static let restrictedLowDelay: Opus.OpusCodec.Application
+    public init(rawValue: Opus.OpusCodec.Application.IntegerLiteralType)
+    public init(integerLiteral value: Opus.OpusCodec.Application.IntegerLiteralType)
+    public init<T>(_ value: T) where T : Swift.BinaryInteger
+    public typealias RawValue = Opus.OpusCodec.Application.IntegerLiteralType
+  }
+}
+extension Opus.OpusCodec {
+  public class Decoder {
+    public init(format: AVFAudio.AVAudioFormat, application _: Opus.OpusCodec.Application = .audio) throws
+    @objc deinit
+    public func reset() throws
+  }
+}
+extension Opus.OpusCodec.Decoder {
+  public func decode(_ input: Foundation.Data) throws -> AVFAudio.AVAudioPCMBuffer
+  public func decode(_ input: Swift.UnsafeBufferPointer<Swift.UInt8>, to output: AVFAudio.AVAudioPCMBuffer) throws
+}
+extension Opus.OpusCodec {
+  public class Encoder {
+    public init(format: AVFAudio.AVAudioFormat, application: Opus.OpusCodec.Application = .audio) throws
+    @objc deinit
+    public func reset() throws
+  }
+}
+extension Opus.OpusCodec.Encoder {
+  public func encode(_ input: AVFAudio.AVAudioPCMBuffer, to output: inout Foundation.Data) throws -> Swift.Int
+  public func encode(_ input: AVFAudio.AVAudioPCMBuffer, to output: inout [Swift.UInt8]) throws -> Swift.Int
+  public func encode(_ input: AVFAudio.AVAudioPCMBuffer, to output: Swift.UnsafeMutableRawBufferPointer) throws -> Swift.Int
+  public func encode(_ input: AVFAudio.AVAudioPCMBuffer, to output: Swift.UnsafeMutableBufferPointer<Swift.UInt8>) throws -> Swift.Int
+}
+extension Opus.OpusCodec {
+  public struct Error : Swift.Error, Swift.Equatable, Swift.RawRepresentable, Swift.ExpressibleByIntegerLiteral {
+    public typealias IntegerLiteralType = Swift.Int32
+    public var rawValue: Opus.OpusCodec.Error.IntegerLiteralType
+    public static let ok: Opus.OpusCodec.Error
+    public static let badArgument: Opus.OpusCodec.Error
+    public static let bufferTooSmall: Opus.OpusCodec.Error
+    public static let internalError: Opus.OpusCodec.Error
+    public static let invalidPacket: Opus.OpusCodec.Error
+    public static let unimplemented: Opus.OpusCodec.Error
+    public static let invalidState: Opus.OpusCodec.Error
+    public static let allocationFailure: Opus.OpusCodec.Error
+    public init(rawValue: Opus.OpusCodec.Error.IntegerLiteralType)
+    public init(integerLiteral value: Opus.OpusCodec.Error.IntegerLiteralType)
+    public init<T>(_ value: T) where T : Swift.BinaryInteger
+    public typealias RawValue = Opus.OpusCodec.Error.IntegerLiteralType
+  }
+}
+public enum OpusCodec : Swift.CaseIterable {
+  public typealias AllCases = [Opus.OpusCodec]
+  nonisolated public static var allCases: [Opus.OpusCodec] {
+    get
+  }
+}
+extension AVFAudio.AVAudioFormat.OpusPCMFormat : Swift.Equatable {}
+extension AVFAudio.AVAudioFormat.OpusPCMFormat : Swift.Hashable {}

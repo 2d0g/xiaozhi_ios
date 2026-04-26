@@ -16,16 +16,20 @@ class WakeWordManager: ObservableObject {
     }
 
     func startEngine() {
-        if isInitialized { 
+        DispatchQueue.main.async {
+            if self.isInitialized { 
+                self.isActive = true
+                return 
+            }
+            self.initializeSherpa()
             self.isActive = true
-            return 
         }
-        self.initializeSherpa()
-        self.isActive = true
     }
     
     func stopEngine() {
-        self.isActive = false
+        DispatchQueue.main.async {
+            self.isActive = false
+        }
     }
 
     func initializeSherpa() {

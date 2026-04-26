@@ -7,126 +7,142 @@ class AudioEngineManager: ObservableObject {
     private var playerNode: AVAudioPlayerNode?
     
     @Published var isRecording = false
-    @Published var isListening = true // 默认开启常驻监听
-    
+    private var isAISpeaking = false
+
     private let nativeFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 48000, channels: 1, interleaved: false)!
     private let wakeFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 16000, channels: 1, interleaved: false)!
     
     private var opusDecoder: AVAudioConverter?
     private var wakeResampler: AVAudioConverter?
     private let audioQueue = DispatchQueue(label: "com.xiaozhi.audio.pro", qos: .userInteractive)
+    
+    private var rollingBuffer: [Float] = [] 
+    private let bufferLimit = 16000 * 2
+    private var lastDetectedKeyword: String = ""
+    private var txCount = 0
+    
+    private let opusEncoder = OpusEncoder()
+    private var accumulationBuffer: [Float] = []
+    private let opusFrameSize = 320 // 20ms @ 16kHz
 
     init() {
         self.setupAudioEngine()
-        
-        // 绑定唤醒成功回调
+        WebSocketManager.shared.onHandshakeComplete = { [weak self] in
+            DispatchQueue.main.async { self?.flushBufferToServer() }
+        }
+        WebSocketManager.shared.onConnectionLost = { [weak self] in
+            DispatchQueue.main.async {
+                print("🔄 业务断开，重启唤醒")
+                self?.stopRecording()
+                WakeWordManager.shared.startEngine()
+            }
+        }
         WakeWordManager.shared.onWakeWordDetected = { [weak self] keyword in
-            self?.triggerAIConversation()
+            print("🎯 唤醒: \(keyword)")
+            DispatchQueue.main.async {
+                self?.lastDetectedKeyword = keyword
+                self?.triggerAIConversation()
+            }
         }
     }
 
     private func setupAudioEngine() {
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth, .mixWithOthers])
+            try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setPreferredIOBufferDuration(0.02)
             try session.setActive(true)
-            
             let engine = AVAudioEngine()
             let player = AVAudioPlayerNode()
             engine.attach(player)
             engine.connect(player, to: engine.mainMixerNode, format: nativeFormat)
-            
             var asbd = AudioStreamBasicDescription(mSampleRate: 48000, mFormatID: kAudioFormatOpus, mFormatFlags: 0, mBytesPerPacket: 0, mFramesPerPacket: 960, mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0)
             self.opusDecoder = AVAudioConverter(from: AVAudioFormat(streamDescription: &asbd)!, to: nativeFormat)
-            
-            self.audioEngine = engine
-            self.playerNode = player
-            
+            self.audioEngine = engine; self.playerNode = player
             self.startPassiveListening()
-            
-            engine.prepare()
-            try engine.start()
-            player.play()
-            print("🚀 iPhone 11 双工语音管线已启动")
-        } catch {
-            print("!!! 引擎初始化失败: \(error)")
-        }
+            engine.prepare(); try engine.start(); player.play()
+        } catch { print("!!! 引擎失败: \(error)") }
     }
 
     private func startPassiveListening() {
         guard let engine = self.audioEngine else { return }
         let inputNode = engine.inputNode
         let hwFormat = inputNode.outputFormat(forBus: 0)
-        
         self.wakeResampler = AVAudioConverter(from: hwFormat, to: wakeFormat)
-        
-        inputNode.removeTap(onBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 4800, format: hwFormat) { [weak self] buffer, _ in
-            self?.audioQueue.async {
-                self?.handleMicInput(buffer)
-            }
+            self?.audioQueue.async { self?.handleMicInput(buffer) }
         }
     }
 
     private func handleMicInput(_ buffer: AVAudioPCMBuffer) {
         guard let resampler = wakeResampler else { return }
-        
-        // 1. 自动计算所需的输出容量 (输入长度 * 16k / 原始采样率)
         let ratio = 16000.0 / buffer.format.sampleRate
         let outCapacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 100
-        
         guard let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: outCapacity) else { return }
-        
         var error: NSError?
-        let status = resampler.convert(to: outBuffer, error: &error) { _, outStatus in
-            outStatus.pointee = .haveData
-            return buffer
+        resampler.convert(to: outBuffer, error: &error) { _, outStatus in outStatus.pointee = .haveData; return buffer }
+        let samples = Array(UnsafeBufferPointer(start: outBuffer.floatChannelData![0], count: Int(outBuffer.frameLength)))
+        
+        if WakeWordManager.shared.isActive {
+            WakeWordManager.shared.processAudio(samples: samples)
         }
         
-        if status == .haveData {
-            // 2. 将 16k 数据喂给唤醒管理器
-            let array = Array(UnsafeBufferPointer(start: outBuffer.floatChannelData![0], count: Int(outBuffer.frameLength)))
-            WakeWordManager.shared.processAudio(samples: array)
-            
-            // 3. TODO: 如果当前正在通话模式，则同时也发送给 WebSocket
-            // if self.isRecording { WebSocketManager.shared.sendAudioData(...) }
+        if self.isRecording && WebSocketManager.shared.isConnected && !self.isAISpeaking {
+            self.accumulationBuffer.append(contentsOf: samples)
+            while self.accumulationBuffer.count >= opusFrameSize {
+                let frame = Array(self.accumulationBuffer[0..<opusFrameSize])
+                self.accumulationBuffer.removeFirst(opusFrameSize)
+                let boostedFrame = frame.map { max(-1.0, min(1.0, $0 * 3.0)) }
+                if let encodedData = opusEncoder.encode(pcm: boostedFrame) {
+                    WebSocketManager.shared.sendAudioData(encodedData)
+                    self.txCount += 1
+                }
+            }
+            if self.txCount % 60 == 0 && self.txCount > 0 { print(">>> [Streaming] 已发送帧 #\(self.txCount)") }
+        } else {
+            if !self.accumulationBuffer.isEmpty { self.accumulationBuffer.removeAll() }
         }
     }
     
-    private func triggerAIConversation() {
-        print("🔊 唤醒词触发！正在建立连接并开启 AI 对话...")
-        
-        // 1. 如果尚未连接，则发起连接（这里需要你填入默认的 URL 和 Token，或者从配置读取）
-        if !WebSocketManager.shared.isConnected {
-            // 注意：这里建议从你的配置中心获取真正的 URL 和 Token
-            // WebSocketManager.shared.connect(url: "wss://...", token: "...")
-            print(">>> 正在发起 WebSocket 业务连接...")
+    func setAISpeaking(_ speaking: Bool) {
+        DispatchQueue.main.async {
+            self.isAISpeaking = speaking
+            if speaking { print("🤫 AI 播音中...") }
         }
+    }
+
+    private func triggerAIConversation() {
+        self.resetPlayback()
+        self.isRecording = false
+        WakeWordManager.shared.stopEngine()
+        if !WebSocketManager.shared.isConnected {
+            WebSocketManager.shared.reconnect()
+        } else {
+            self.flushBufferToServer()
+        }
+    }
+    
+    private func flushBufferToServer() {
+        print("🚀 链路就绪，补发文字并开启流...")
         
-        // 2. 发送开始监听指令
+        // 先发送控制指令
         WebSocketManager.shared.sendListenStart()
         
-        DispatchQueue.main.async {
-            self.isRecording = true
+        // 紧接着发送刚才识别到的词（不再等待）
+        if !self.lastDetectedKeyword.isEmpty {
+            let kw = self.lastDetectedKeyword
+            print(">>> [TX Text] 发送文字: \(kw)")
+            WebSocketManager.shared.sendText(kw)
+            self.lastDetectedKeyword = ""
         }
+        
+        self.txCount = 0
+        self.isRecording = true
+        print(">>> 开启实时流传输")
     }
 
-    func resetPlayback() {
-        self.playerNode?.stop()
-        if let engine = self.audioEngine, engine.isRunning {
-            self.playerNode?.play()
-        }
-    }
-    
-    func flushPlayback() {
-        // 用于流式播放结束时的清理，直通模式下保持空实现
-    }
-
-    func stopRecording() {
-        DispatchQueue.main.async {
-            self.isRecording = false
-        }
-    }
+    func resetPlayback() { self.playerNode?.stop(); self.playerNode?.play() }
+    func stopRecording() { self.isRecording = false }
 
     func playAIResponse(data: Data) {
         audioQueue.async {
