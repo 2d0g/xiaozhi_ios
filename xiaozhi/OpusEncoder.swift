@@ -31,10 +31,11 @@ class OpusEncoder {
     func encode(pcm: [Float]) -> Data? {
         guard let enc = encoder else { return nil }
         
-        // 1. Float32 -> Int16 (采用标准 32768 系数)
+        // 1. Float32 -> Int16 (采用安全系数 32767，防止正向溢出)
         let int16Samples = pcm.map { sample -> Int16 in
             let clamped = max(-1.0, min(1.0, sample))
-            return Int16(clamped * 32768.0)
+            let scaled = clamped * 32767.0
+            return Int16(scaled)
         }
         
         // 2. 准备输出缓冲区

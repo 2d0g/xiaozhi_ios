@@ -49,18 +49,38 @@ class AudioEngineManager: ObservableObject {
     private func setupAudioEngine() {
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth])
+            
+            // 模式优化：.videoChat 拥有更高的扬声器功率
+            try session.setCategory(.playAndRecord, 
+                                  mode: .videoChat, 
+                                  options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowBluetoothHFP])
+            
+            try? session.overrideOutputAudioPort(.speaker)
+            
+            if session.isInputGainSettable {
+                try? session.setInputGain(1.0)
+            }
+            
             try session.setPreferredIOBufferDuration(0.02)
             try session.setActive(true)
+            
             let engine = AVAudioEngine()
             let player = AVAudioPlayerNode()
             engine.attach(player)
+            
+            player.volume = 1.0
+            engine.mainMixerNode.outputVolume = 1.0
+            
             engine.connect(player, to: engine.mainMixerNode, format: nativeFormat)
+            
             var asbd = AudioStreamBasicDescription(mSampleRate: 48000, mFormatID: kAudioFormatOpus, mFormatFlags: 0, mBytesPerPacket: 0, mFramesPerPacket: 960, mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0)
             self.opusDecoder = AVAudioConverter(from: AVAudioFormat(streamDescription: &asbd)!, to: nativeFormat)
+            
             self.audioEngine = engine; self.playerNode = player
             self.startPassiveListening()
+            
             engine.prepare(); try engine.start(); player.play()
+            print("🚀 音频引擎已启动：VideoChat模式 + 增益最大化")
         } catch { print("!!! 引擎失败: \(error)") }
     }
 
@@ -92,13 +112,15 @@ class AudioEngineManager: ObservableObject {
             while self.accumulationBuffer.count >= opusFrameSize {
                 let frame = Array(self.accumulationBuffer[0..<opusFrameSize])
                 self.accumulationBuffer.removeFirst(opusFrameSize)
-                let boostedFrame = frame.map { max(-1.0, min(1.0, $0 * 3.0)) }
+                
+                // 发送端增益：保持 8.0 提高识别灵敏度
+                let boostedFrame = frame.map { max(-1.0, min(1.0, $0 * 8.0)) }
+                
                 if let encodedData = opusEncoder.encode(pcm: boostedFrame) {
                     WebSocketManager.shared.sendAudioData(encodedData)
                     self.txCount += 1
                 }
             }
-            if self.txCount % 60 == 0 && self.txCount > 0 { print(">>> [Streaming] 已发送帧 #\(self.txCount)") }
         } else {
             if !self.accumulationBuffer.isEmpty { self.accumulationBuffer.removeAll() }
         }
@@ -111,7 +133,7 @@ class AudioEngineManager: ObservableObject {
         }
     }
 
-    private func triggerAIConversation() {
+    func triggerAIConversation() {
         self.resetPlayback()
         self.isRecording = false
         WakeWordManager.shared.stopEngine()
@@ -122,13 +144,10 @@ class AudioEngineManager: ObservableObject {
         }
     }
     
-    private func flushBufferToServer() {
-        print("🚀 链路就绪，补发文字并开启流...")
-        
-        // 先发送控制指令
+    func flushBufferToServer() {
+        print("🚀 链路就绪，执行业务对接...")
         WebSocketManager.shared.sendListenStart()
         
-        // 紧接着发送刚才识别到的词（不再等待）
         if !self.lastDetectedKeyword.isEmpty {
             let kw = self.lastDetectedKeyword
             print(">>> [TX Text] 发送文字: \(kw)")
@@ -136,12 +155,19 @@ class AudioEngineManager: ObservableObject {
             self.lastDetectedKeyword = ""
         }
         
-        self.txCount = 0
-        self.isRecording = true
-        print(">>> 开启实时流传输")
+        DispatchQueue.main.async {
+            self.txCount = 0
+            self.isRecording = true
+            print(">>> 开启实时流传输")
+        }
     }
 
-    func resetPlayback() { self.playerNode?.stop(); self.playerNode?.play() }
+    func resetPlayback() { 
+        self.playerNode?.stop()
+        self.playerNode?.volume = 1.0 
+        self.playerNode?.play() 
+    }
+    
     func stopRecording() { self.isRecording = false }
 
     func playAIResponse(data: Data) {
@@ -151,9 +177,19 @@ class AudioEngineManager: ObservableObject {
             inBuffer.byteLength = UInt32(data.count); inBuffer.packetCount = 1
             data.copyBytes(to: inBuffer.data.assumingMemoryBound(to: UInt8.self), count: data.count)
             inBuffer.packetDescriptions?.pointee = AudioStreamPacketDescription(mStartOffset: 0, mVariableFramesInPacket: 960, mDataByteSize: UInt32(data.count))
+            
             let outBuffer = AVAudioPCMBuffer(pcmFormat: self.nativeFormat, frameCapacity: 1024)!
             var error: NSError?
             if dec.convert(to: outBuffer, error: &error, withInputFrom: { _, outStatus in outStatus.pointee = .haveData; return inBuffer }) == .haveData {
+                
+                // --- 播音端暴力增益：放大 2.5 倍 ---
+                if let channelData = outBuffer.floatChannelData?[0] {
+                    let frameCount = Int(outBuffer.frameLength)
+                    for i in 0..<frameCount {
+                        channelData[i] = max(-1.0, min(1.0, channelData[i] * 2.5))
+                    }
+                }
+                
                 player.scheduleBuffer(outBuffer, at: nil, options: [], completionHandler: nil)
                 if !player.isPlaying { player.play() }
             }

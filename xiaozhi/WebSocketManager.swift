@@ -60,9 +60,12 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
     func disconnect() {
         print(">>> 手动关闭 WebSocket 连接")
         webSocketTask?.cancel(with: .normalClosure, reason: nil)
-        self.isConnected = false
-        self.isConnecting = false
-        self.onConnectionLost?()
+        webSocketTask = nil
+        DispatchQueue.main.async {
+            self.isConnected = false
+            self.isConnecting = false
+            self.onConnectionLost?()
+        }
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
@@ -74,7 +77,7 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
         if let error = error {
             let nsError = error as NSError
             if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled { return }
-            print("!!! WebSocket 链路异常 [Code \(nsError.code)]: \(nsError.localizedDescription)")
+            print("!!! WebSocket 链路异常: \(nsError.localizedDescription)")
             DispatchQueue.main.async {
                 self.isConnected = false
                 self.isConnecting = false
@@ -86,7 +89,8 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
 
     private func setupPing() {
         Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-            self?.webSocketTask?.sendPing { error in
+            guard let self = self, self.isConnected else { return }
+            self.webSocketTask?.sendPing { error in
                 if let _ = error { print("!!! Ping 失败") }
             }
         }
@@ -94,9 +98,7 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
 
     private func sendHello() {
         let hello: [String: Any] = [
-            "type": "hello",
-            "version": 1,
-            "transport": "websocket",
+            "type": "hello", "version": 1, "transport": "websocket",
             "audio_params": ["format": "opus", "sample_rate": 16000, "channels": 1, "frame_duration": 20]
         ]
         sendJson(hello)
@@ -109,28 +111,29 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
     
     func sendText(_ text: String) {
         guard isConnected else { return }
-        let msg: [String: Any] = ["type": "listen", "state": "detect", "text": text, "source": "text"]
-        sendJson(msg)
-        
-        // 关键：将发送的文字立即显示在 UI
+        sendJson(["type": "listen", "state": "detect", "text": text, "source": "text"])
         DispatchQueue.main.async {
             self.messages.append(ChatMessage(role: "user", text: text))
         }
     }
     
     func sendAudioData(_ data: Data) {
-        guard isConnected else { return }
-        webSocketTask?.send(.data(data)) { error in
-            if let error = error { print("!!! 音频发送失败: \(error.localizedDescription)") }
+        guard isConnected, let task = webSocketTask, task.state == .running else { return }
+        task.send(.data(data)) { error in
+            if let _ = error {
+                // 如果发送报错，说明链路不通，主动触发清理
+                DispatchQueue.main.async { self.disconnect() }
+            }
         }
     }
     
     private func sendJson(_ dict: [String: Any]) {
+        guard let task = webSocketTask else { return }
         if let data = try? JSONSerialization.data(withJSONObject: dict),
            let str = String(data: data, encoding: .utf8) {
             print(">>> [TX JSON] \(str)")
-            webSocketTask?.send(.string(str)) { error in
-                if let error = error { print("!!! JSON 发送失败") }
+            task.send(.string(str)) { error in
+                if let _ = error { print("!!! JSON 发送失败") }
             }
         }
     }
@@ -138,13 +141,24 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
     private func receiveMessage() {
         webSocketTask?.receive { [weak self] result in
             guard let self = self else { return }
-            if case .success(let message) = result {
+            
+            switch result {
+            case .success(let message):
                 switch message {
                 case .string(let text): self.handleJson(text)
                 case .data(let data): self.handleAudio(data)
                 @unknown default: break
                 }
-                self.receiveMessage()
+                self.receiveMessage() // 继续接收
+                
+            case .failure(let error):
+                // 关键点：如果接收失败，说明链路已死
+                print("⚠️ WebSocket 接收失败（服务器可能已断开）")
+                DispatchQueue.main.async {
+                    if self.isConnected {
+                        self.disconnect() // 执行彻底清理和重启唤醒逻辑
+                    }
+                }
             }
         }
     }
@@ -163,7 +177,6 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
             } else if type == "stt" {
                 if let content = json["text"] as? String {
                     print("<<< [RX STT] \(content)")
-                    // 更新或添加用户消息
                     if self.messages.last?.role == "user" {
                         self.messages[self.messages.count - 1].text = content
                     } else {
@@ -180,7 +193,6 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
                 if let content = json["text"] as? String, !content.isEmpty {
                     if state == "sentence_start" || state == "sentence_end" {
                         if state == "sentence_end" { print("<<< [RX TTS] \(content)") }
-                        // 更新或添加 AI 消息
                         if self.messages.last?.role == "ai" {
                             self.messages[self.messages.count - 1].text = content
                         } else {
@@ -190,12 +202,19 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
                 }
                 
                 if state == "stop" {
-                    // 只有收到全局 stop 标志时，才延迟开启下一轮监听
+                    let fullText = self.messages.last?.text ?? ""
+                    let shouldExit = fullText.contains("再见") || fullText.contains("退出")
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                        if self.isConnected {
-                            print("🔄 AI 播报彻底结束，开启下一轮监听...")
+                        if shouldExit {
+                            print("👋 检测到退出关键词，正在断开连接...")
+                            self.disconnect()
+                        } else if self.isConnected {
+                            print("🔄 AI 播报结束，开启下一轮监听...")
                             AudioEngineManager.shared.setAISpeaking(false)
                             self.sendListenStart()
+                        } else {
+                            AudioEngineManager.shared.setAISpeaking(false)
                         }
                     }
                 }
