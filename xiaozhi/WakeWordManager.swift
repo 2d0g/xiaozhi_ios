@@ -67,8 +67,8 @@ class WakeWordManager: ObservableObject {
             keywordsFile: keywords,
             maxActivePaths: 4,
             numTrailingBlanks: 1,
-            keywordsScore: 5.0,
-            keywordsThreshold: 0.05  // 进一步降低到 0.05，即便非常小的声音也要尝试匹配
+            keywordsScore: 8.0,      // 进一步调高分数权重 (原本 5.0)
+            keywordsThreshold: 0.01  // 极其敏感的阈值 (原本 0.05)
         )
 
         // 3. 创建识别器实例
@@ -84,16 +84,16 @@ class WakeWordManager: ObservableObject {
     func processAudio(samples: [Float]) {
         guard isActive, let spotter = spotter else { return }
         
-        // 1. 软件增益：提升到 10 倍
-        let rawRms = sqrt(samples.map { $0 * $0 }.reduce(0, +) / Float(samples.count))
-        let gain: Float = 10.0
+        // 暴力优化灵敏度：将喂给唤醒引擎的音量放大 15 倍
+        let gain: Float = 15.0
         let boostedSamples = samples.map { max(-1.0, min(1.0, $0 * gain)) }
         
-        // 2. 能量统计
+        // 2. 能量统计 (仅用于调试)
         totalSamplesReceived += boostedSamples.count
         if Date().timeIntervalSince(lastLogTime) >= 5.0 {
+            let rawRms = sqrt(samples.map { $0 * $0 }.reduce(0, +) / Float(samples.count))
             let boostedRms = sqrt(boostedSamples.map { $0 * $0 }.reduce(0, +) / Float(boostedSamples.count))
-            print("DEBUG [WakeUp] 状态：累计采样点 \(totalSamplesReceived), 原始能量: \(String(format: "%.4f", rawRms)), 10倍增益后: \(String(format: "%.4f", boostedRms))")
+            print("DEBUG [WakeUp] 状态：灵敏度探测中，原始能量: \(String(format: "%.4f", rawRms)), 15倍增益后: \(String(format: "%.4f", boostedRms))")
             lastLogTime = Date()
         }
         

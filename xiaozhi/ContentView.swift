@@ -38,17 +38,48 @@ struct ContentView: View {
         .padding()
         .onAppear {
             loadInitialData()
+            // 启动后自动执行 OTA 握手，尝试自动激活
+            self.performOTAHandshake()
         }
     }
 
     private var headerSection: some View {
-        VStack(spacing: 5) {
-            Image(systemName: "bolt.shield.fill")
-                .font(.system(size: 40))
-                .foregroundColor(.accentColor)
-            Text("小智 AI 助手").font(.title2).fontWeight(.bold)
+        HStack {
+            Spacer()
+            VStack(spacing: 5) {
+                Image(systemName: "bolt.shield.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(.accentColor)
+                Text("小智 AI 助手").font(.title2).fontWeight(.bold)
+            }
+            .padding(.leading, 40) // 抵消右侧按钮，保持标题居中
+            
+            Spacer()
+            
+            if isFullyActivated {
+                Button(action: { self.confirmUnbind() }) {
+                    Image(systemName: "arrow.uturn.backward.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                }
+                .help("解绑设备")
+            }
         }
         .padding(.top, 20)
+        .padding(.horizontal)
+    }
+    
+    private func confirmUnbind() {
+        // 执行解绑清理工作
+        wsManager.disconnect()
+        WakeWordManager.shared.stopEngine()
+        
+        withAnimation {
+            self.isFullyActivated = false
+            self.activationCode = "已重置"
+            self.errorMessage = nil
+        }
+        print("🚮 设备已成功解绑并重置状态")
     }
 
     private var identitySection: some View {

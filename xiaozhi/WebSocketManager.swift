@@ -193,9 +193,15 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
                 if let content = json["text"] as? String, !content.isEmpty {
                     if state == "sentence_start" || state == "sentence_end" {
                         if state == "sentence_end" { print("<<< [RX TTS] \(content)") }
-                        if self.messages.last?.role == "ai" {
-                            self.messages[self.messages.count - 1].text = content
+                        
+                        // 智能更新 UI 逻辑：
+                        if let lastMsg = self.messages.last, lastMsg.role == "ai" {
+                            // 如果服务器正在发后续段落，且当前气泡还没显示过这段话，则追加
+                            if !lastMsg.text.contains(content) {
+                                self.messages[self.messages.count - 1].text += content
+                            }
                         } else {
+                            // 如果是全新的 AI 回复，创建新气泡
                             self.messages.append(ChatMessage(role: "ai", text: content))
                         }
                     }

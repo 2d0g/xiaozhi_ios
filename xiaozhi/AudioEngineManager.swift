@@ -38,7 +38,7 @@ class AudioEngineManager: ObservableObject {
             }
         }
         WakeWordManager.shared.onWakeWordDetected = { [weak self] keyword in
-            print("🎯 唤醒: \(keyword)")
+            print("🎯 命中关键词: \(keyword)")
             DispatchQueue.main.async {
                 self?.lastDetectedKeyword = keyword
                 self?.triggerAIConversation()
@@ -50,18 +50,15 @@ class AudioEngineManager: ObservableObject {
         do {
             let session = AVAudioSession.sharedInstance()
             
-            // 模式优化：.videoChat 拥有更高的扬声器功率
+            // 模式优化：.videoChat 拥有更高的扬声器功率，并支持蓝牙
             try session.setCategory(.playAndRecord, 
                                   mode: .videoChat, 
                                   options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowBluetoothHFP])
             
             try? session.overrideOutputAudioPort(.speaker)
+            if session.isInputGainSettable { try? session.setInputGain(1.0) }
             
-            if session.isInputGainSettable {
-                try? session.setInputGain(1.0)
-            }
-            
-            try session.setPreferredIOBufferDuration(0.02)
+            try session.setPreferredIOBufferDuration(0.01)
             try session.setActive(true)
             
             let engine = AVAudioEngine()
@@ -80,7 +77,7 @@ class AudioEngineManager: ObservableObject {
             self.startPassiveListening()
             
             engine.prepare(); try engine.start(); player.play()
-            print("🚀 音频引擎已启动：VideoChat模式 + 增益最大化")
+            print("🚀 音频引擎已启动：极限音量增强模式")
         } catch { print("!!! 引擎失败: \(error)") }
     }
 
@@ -145,16 +142,14 @@ class AudioEngineManager: ObservableObject {
     }
     
     func flushBufferToServer() {
-        print("🚀 链路就绪，执行业务对接...")
+        print("🚀 链路就绪，补发文字并开启流...")
         WebSocketManager.shared.sendListenStart()
-        
         if !self.lastDetectedKeyword.isEmpty {
             let kw = self.lastDetectedKeyword
             print(">>> [TX Text] 发送文字: \(kw)")
             WebSocketManager.shared.sendText(kw)
             self.lastDetectedKeyword = ""
         }
-        
         DispatchQueue.main.async {
             self.txCount = 0
             self.isRecording = true
@@ -182,11 +177,12 @@ class AudioEngineManager: ObservableObject {
             var error: NSError?
             if dec.convert(to: outBuffer, error: &error, withInputFrom: { _, outStatus in outStatus.pointee = .haveData; return inBuffer }) == .haveData {
                 
-                // --- 播音端暴力增益：放大 2.5 倍 ---
+                // --- 终极增强：5.0 倍数级放大 ---
                 if let channelData = outBuffer.floatChannelData?[0] {
                     let frameCount = Int(outBuffer.frameLength)
                     for i in 0..<frameCount {
-                        channelData[i] = max(-1.0, min(1.0, channelData[i] * 2.5))
+                        let raw = channelData[i] * 5.0
+                        channelData[i] = max(-1.0, min(1.0, raw))
                     }
                 }
                 
