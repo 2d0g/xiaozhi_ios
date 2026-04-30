@@ -50,16 +50,32 @@ class AudioEngineManager: ObservableObject {
         do {
             let session = AVAudioSession.sharedInstance()
             
-            // 模式优化：.videoChat 拥有更高的扬声器功率，并支持蓝牙
-            try session.setCategory(.playAndRecord, 
-                                  mode: .videoChat, 
-                                  options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowBluetoothHFP])
+            // 监听路由变化（蓝牙连接/断开）
+            NotificationCenter.default.addObserver(self, selector: #selector(handleRouteChange), name: AVAudioSession.routeChangeNotification, object: nil)
             
-            try? session.overrideOutputAudioPort(.speaker)
+            // 监听音频打断（电话、闹钟等）
+            NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+            
+            // 尝试：移除 .defaultToSpeaker，看看是否能优先连接蓝牙
+            // 如果移除后蓝牙可用了，说明 .defaultToSpeaker 在某些设备上权重过高
+            try session.setCategory(.playAndRecord, 
+                                  mode: .default, 
+                                  options: [.allowBluetooth, .allowBluetoothA2DP])
+            
             if session.isInputGainSettable { try? session.setInputGain(1.0) }
             
             try session.setPreferredIOBufferDuration(0.01)
             try session.setActive(true)
+            
+            // 检查当前路由，如果既不是蓝牙也不是耳机，再手动切到扬声器
+            let currentRoute = session.currentRoute
+            let isBluetooth = currentRoute.outputs.contains { $0.portType == .bluetoothA2DP || $0.portType == .bluetoothHFP }
+            let isHeadphones = currentRoute.outputs.contains { $0.portType == .headphones }
+            
+            if !isBluetooth && !isHeadphones {
+                print("ℹ️ 未检测到蓝牙或耳机，手动切到扬声器")
+                try? session.overrideOutputAudioPort(.speaker)
+            }
             
             let engine = AVAudioEngine()
             let player = AVAudioPlayerNode()
@@ -164,6 +180,48 @@ class AudioEngineManager: ObservableObject {
     }
     
     func stopRecording() { self.isRecording = false }
+
+    @objc private func handleRouteChange(notification: Notification) {
+        let session = AVAudioSession.sharedInstance()
+        let outputs = session.currentRoute.outputs
+        let reasonValue = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt
+        let reason = reasonValue.map { AVAudioSession.RouteChangeReason(rawValue: $0) }
+        
+        print("🎧 音频路由变更, 原因: \(String(describing: reason)), 当前输出: \(outputs.map { "\($0.portType.rawValue):\($0.portName)" }.joined(separator: ", "))")
+        
+        // 如果连接了蓝牙设备，确保取消强制扬声器输出
+        let hasBluetooth = outputs.contains { $0.portType == .bluetoothA2DP || $0.portType == .bluetoothHFP }
+        if hasBluetooth {
+            print("🔵 路由包含蓝牙，确保未强制覆盖到扬声器")
+            try? session.overrideOutputAudioPort(.none)
+        } else if reason == .oldDeviceUnavailable {
+            // 如果蓝牙断开了，切回扬声器
+            print("🔈 蓝牙已断开，切回扬声器")
+            try? session.overrideOutputAudioPort(.speaker)
+        }
+    }
+
+    @objc private func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else { return }
+        
+        if type == .began {
+            print("📞 音频打断开始，停止录音与播放")
+            self.stopRecording()
+            self.playerNode?.stop()
+            WebSocketManager.shared.disconnect()
+        } else if type == .ended {
+            print("📞 音频打断结束")
+            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if options.contains(.shouldResume) {
+                    print("▶️ 尝试恢复唤醒引擎")
+                    WakeWordManager.shared.startEngine()
+                }
+            }
+        }
+    }
 
     func playAIResponse(data: Data) {
         audioQueue.async {
