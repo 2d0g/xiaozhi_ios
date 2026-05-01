@@ -66,10 +66,10 @@ class WakeWordManager: ObservableObject {
             featConfig: featConfig,
             modelConfig: modelConfig,
             keywordsFile: keywords,
-            maxActivePaths: 12,      // 极限优化：从 6 提高到 12，允许引擎深度搜寻弱信号
+            maxActivePaths: 4,       // 回归标准搜寻路径
             numTrailingBlanks: 1,
-            keywordsScore: 30.0,     // 回调到 30.0，配合超低阈值使用更稳定
-            keywordsThreshold: 0.00001 // 极限优化：再次降低 10 倍，几乎不设任何进入门槛
+            keywordsScore: 2.0,      // 回归理性的权重 (默认 1.0，2.0 属于轻微偏置)
+            keywordsThreshold: 0.1   // 回归官方平衡阈值 (0.1 - 0.2 是最稳区间)
         )
 
         // 3. 创建识别器实例
@@ -85,9 +85,9 @@ class WakeWordManager: ObservableObject {
     func processAudio(samples: [Float]) {
         guard isActive, let spotter = spotter else { return }
         
-        // 优化策略：将增益降低到 10 倍以避免波形畸变（Clipping），让 AI 看清更清晰的特征
+        // 甜点位增益：使用 25 倍增益，兼顾信号强度与波形清晰度（避免 Clipping 爆音）
         var boostedSamples = samples
-        var gain: Float = 10.0
+        var gain: Float = 25.0
         var low: Float = -1.0
         var high: Float = 1.0
         vDSP_vsmul(boostedSamples, 1, &gain, &boostedSamples, 1, vDSP_Length(boostedSamples.count))
@@ -100,7 +100,7 @@ class WakeWordManager: ObservableObject {
             vDSP_rmsqv(samples, 1, &rms, vDSP_Length(samples.count))
             var boostedRms: Float = 0
             vDSP_rmsqv(boostedSamples, 1, &boostedRms, vDSP_Length(boostedSamples.count))
-            print("DEBUG [WakeUp] 状态：灵敏度探测中，原始能量: \(String(format: "%.4f", rms)), 10倍增益后: \(String(format: "%.4f", boostedRms))")
+            print("DEBUG [WakeUp] 状态：灵敏度探测中，原始能量: \(String(format: "%.4f", rms)), 25倍增益后: \(String(format: "%.4f", boostedRms))")
             lastLogTime = Date()
         }
         
