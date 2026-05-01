@@ -65,6 +65,8 @@ class AudioEngineManager: ObservableObject {
             
             if session.isInputGainSettable { try? session.setInputGain(1.0) }
             
+            // 优化：请求 16kHz 硬件采样率，减少输入端重采样开销
+            try? session.setPreferredSampleRate(16000)
             try session.setPreferredIOBufferDuration(0.01)
             try session.setActive(true)
             
@@ -85,16 +87,17 @@ class AudioEngineManager: ObservableObject {
             player.volume = 1.0
             engine.mainMixerNode.outputVolume = 1.0
             
+            // 播放链路保持 48kHz 以确保在各种音频设备上播放丝滑
             engine.connect(player, to: engine.mainMixerNode, format: nativeFormat)
             
-            var asbd = AudioStreamBasicDescription(mSampleRate: 48000, mFormatID: kAudioFormatOpus, mFormatFlags: 0, mBytesPerPacket: 0, mFramesPerPacket: 960, mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0)
+            var asbd = AudioStreamBasicDescription(mSampleRate: 16000, mFormatID: kAudioFormatOpus, mFormatFlags: 0, mBytesPerPacket: 0, mFramesPerPacket: 320, mBytesPerFrame: 0, mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0)
             self.opusDecoder = AVAudioConverter(from: AVAudioFormat(streamDescription: &asbd)!, to: nativeFormat)
             
             self.audioEngine = engine; self.playerNode = player
             self.startPassiveListening()
             
             engine.prepare(); try engine.start(); player.play()
-            print("🚀 音频引擎已启动：极限音量增强模式")
+            print("🚀 音频引擎已启动：混合采样率模式 (Input: 16k, Output: 48k)")
         } catch { print("!!! 引擎失败: \(error)") }
     }
 
@@ -102,14 +105,34 @@ class AudioEngineManager: ObservableObject {
         guard let engine = self.audioEngine else { return }
         let inputNode = engine.inputNode
         let hwFormat = inputNode.outputFormat(forBus: 0)
-        self.wakeResampler = AVAudioConverter(from: hwFormat, to: wakeFormat)
-        inputNode.installTap(onBus: 0, bufferSize: 4800, format: hwFormat) { [weak self] buffer, _ in
+        
+        // 只有当硬件采样率不等于 16kHz 时才需要重采样器
+        if hwFormat.sampleRate != 16000 {
+            print("ℹ️ 硬件采样率为 \(hwFormat.sampleRate), 开启软件重采样至 16kHz")
+            self.wakeResampler = AVAudioConverter(from: hwFormat, to: wakeFormat)
+        } else {
+            print("✅ 硬件采样率已成功设为 16kHz, 消灭软件重采样")
+            self.wakeResampler = nil
+        }
+        
+        inputNode.installTap(onBus: 0, bufferSize: 1600, format: hwFormat) { [weak self] buffer, _ in
             self?.audioQueue.async { self?.handleMicInput(buffer) }
         }
     }
 
     private func getResampledSamples(_ buffer: AVAudioPCMBuffer) -> [Float]? {
-        guard let resampler = wakeResampler else { return nil }
+        // 如果硬件已经是 16kHz，直接提取数据，跳过转换逻辑
+        if buffer.format.sampleRate == 16000 {
+            guard let channelData = buffer.floatChannelData?[0] else { return nil }
+            return Array(UnsafeBufferPointer(start: channelData, count: Int(buffer.frameLength)))
+        }
+        
+        guard let resampler = wakeResampler else { 
+            // 理论上不应该走到这里，除非硬件采样率在运行中变化了且没有重置监听
+            guard let channelData = buffer.floatChannelData?[0] else { return nil }
+            return Array(UnsafeBufferPointer(start: channelData, count: Int(buffer.frameLength)))
+        }
+        
         let ratio = 16000.0 / buffer.format.sampleRate
         let outCapacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 100
         guard let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: outCapacity) else { return nil }
