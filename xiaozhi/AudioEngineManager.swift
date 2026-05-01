@@ -33,7 +33,8 @@ class AudioEngineManager: ObservableObject {
         }
         WebSocketManager.shared.onConnectionLost = { [weak self] in
             DispatchQueue.main.async {
-                print("🔄 业务断开，重启唤醒")
+                print("🔄 业务断开，重启唤醒并重置状态")
+                self?.isAISpeaking = false
                 self?.stopRecording()
                 WakeWordManager.shared.startEngine()
             }

@@ -214,6 +214,7 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                         if shouldExit {
                             print("👋 检测到退出关键词，正在断开连接...")
+                            AudioEngineManager.shared.setAISpeaking(false)
                             self.disconnect()
                         } else if self.isConnected {
                             print("🔄 AI 播报结束，开启下一轮监听...")
