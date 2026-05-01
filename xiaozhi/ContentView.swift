@@ -179,8 +179,13 @@ struct ContentView: View {
     }
 
     private func sendMessage() {
-        guard !inputText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        wsManager.sendText(inputText)
+        let text = inputText.trimmingCharacters(in: .whitespaces)
+        guard !text.isEmpty else { return }
+        
+        // 核心改动：调用音频管理器的文本触发接口
+        // 该方法会自动停止唤醒引擎、建立连接并发送文字
+        audioEngine.triggerTextConversation(text: text)
+        
         inputText = ""
     }
 

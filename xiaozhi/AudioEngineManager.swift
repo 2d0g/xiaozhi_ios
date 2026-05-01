@@ -209,6 +209,22 @@ class AudioEngineManager: ObservableObject {
         }
     }
     
+    // 新增：支持纯文本触发对话，跳过唤醒流程
+    func triggerTextConversation(text: String) {
+        self.resetPlayback()
+        self.isRecording = false
+        WakeWordManager.shared.stopEngine()
+        
+        // 保存文本以便在握手完成后发送
+        self.lastDetectedKeyword = text
+        
+        if !WebSocketManager.shared.isConnected {
+            WebSocketManager.shared.reconnect()
+        } else {
+            self.flushBufferToServer()
+        }
+    }
+    
     func flushBufferToServer() {
         print("🚀 链路就绪，补发文字并开启流...")
         WebSocketManager.shared.sendListenStart()
