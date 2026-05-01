@@ -58,7 +58,7 @@ class WakeWordManager: ObservableObject {
         let modelConfig = sherpaOnnxOnlineModelConfig(
             tokens: tokens,
             transducer: sherpaOnnxOnlineTransducerModelConfig(encoder: encoder, decoder: decoder, joiner: joiner),
-            numThreads: 2,
+            numThreads: 1, // 优化：将线程数从 2 降为 1。在小模型上，单线程往往能减少线程切换开销并降低 CPU。
             modelType: "zipformer2"  // 针对 mobile 优化版模型
         )
         
@@ -66,7 +66,7 @@ class WakeWordManager: ObservableObject {
             featConfig: featConfig,
             modelConfig: modelConfig,
             keywordsFile: keywords,
-            maxActivePaths: 4,
+            maxActivePaths: 3,       // 优化：从 4 降为 3，稍微减小搜索空间。
             numTrailingBlanks: 1,
             keywordsScore: 8.0,      // 进一步调高分数权重 (原本 5.0)
             keywordsThreshold: 0.01  // 极其敏感的阈值 (原本 0.05)
