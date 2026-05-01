@@ -1,5 +1,6 @@
 import Foundation
 import AVFoundation
+import Accelerate
 
 class WakeWordManager: ObservableObject {
     static let shared = WakeWordManager()
@@ -84,16 +85,22 @@ class WakeWordManager: ObservableObject {
     func processAudio(samples: [Float]) {
         guard isActive, let spotter = spotter else { return }
         
-        // 暴力优化灵敏度：将喂给唤醒引擎的音量放大 15 倍
-        let gain: Float = 15.0
-        let boostedSamples = samples.map { max(-1.0, min(1.0, $0 * gain)) }
+        // 暴力优化灵敏度：使用 vDSP 将喂给唤醒引擎的音量放大 15 倍
+        var boostedSamples = samples
+        var gain: Float = 15.0
+        var low: Float = -1.0
+        var high: Float = 1.0
+        vDSP_vsmul(boostedSamples, 1, &gain, &boostedSamples, 1, vDSP_Length(boostedSamples.count))
+        vDSP_vclip(boostedSamples, 1, &low, &high, &boostedSamples, 1, vDSP_Length(boostedSamples.count))
         
         // 2. 能量统计 (仅用于调试)
         totalSamplesReceived += boostedSamples.count
         if Date().timeIntervalSince(lastLogTime) >= 5.0 {
-            let rawRms = sqrt(samples.map { $0 * $0 }.reduce(0, +) / Float(samples.count))
-            let boostedRms = sqrt(boostedSamples.map { $0 * $0 }.reduce(0, +) / Float(boostedSamples.count))
-            print("DEBUG [WakeUp] 状态：灵敏度探测中，原始能量: \(String(format: "%.4f", rawRms)), 15倍增益后: \(String(format: "%.4f", boostedRms))")
+            var rms: Float = 0
+            vDSP_rmsqv(samples, 1, &rms, vDSP_Length(samples.count))
+            var boostedRms: Float = 0
+            vDSP_rmsqv(boostedSamples, 1, &boostedRms, vDSP_Length(boostedSamples.count))
+            print("DEBUG [WakeUp] 状态：灵敏度探测中，原始能量: \(String(format: "%.4f", rms)), 15倍增益后: \(String(format: "%.4f", boostedRms))")
             lastLogTime = Date()
         }
         

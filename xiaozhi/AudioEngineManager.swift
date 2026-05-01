@@ -1,5 +1,6 @@
 import Foundation
 import AVFoundation
+import Accelerate
 
 class AudioEngineManager: ObservableObject {
     static let shared = AudioEngineManager()
@@ -107,36 +108,63 @@ class AudioEngineManager: ObservableObject {
         }
     }
 
-    private func handleMicInput(_ buffer: AVAudioPCMBuffer) {
-        guard let resampler = wakeResampler else { return }
+    private func getResampledSamples(_ buffer: AVAudioPCMBuffer) -> [Float]? {
+        guard let resampler = wakeResampler else { return nil }
         let ratio = 16000.0 / buffer.format.sampleRate
         let outCapacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 100
-        guard let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: outCapacity) else { return }
+        guard let outBuffer = AVAudioPCMBuffer(pcmFormat: wakeFormat, frameCapacity: outCapacity) else { return nil }
         var error: NSError?
         resampler.convert(to: outBuffer, error: &error) { _, outStatus in outStatus.pointee = .haveData; return buffer }
-        let samples = Array(UnsafeBufferPointer(start: outBuffer.floatChannelData![0], count: Int(outBuffer.frameLength)))
-        
-        if WakeWordManager.shared.isActive {
-            WakeWordManager.shared.processAudio(samples: samples)
-        }
-        
-        if self.isRecording && WebSocketManager.shared.isConnected && !self.isAISpeaking {
-            self.accumulationBuffer.append(contentsOf: samples)
-            while self.accumulationBuffer.count >= opusFrameSize {
-                let frame = Array(self.accumulationBuffer[0..<opusFrameSize])
-                self.accumulationBuffer.removeFirst(opusFrameSize)
-                
-                // 发送端增益：保持 8.0 提高识别灵敏度
-                let boostedFrame = frame.map { max(-1.0, min(1.0, $0 * 8.0)) }
-                
-                if let encodedData = opusEncoder.encode(pcm: boostedFrame) {
-                    WebSocketManager.shared.sendAudioData(encodedData)
-                    self.txCount += 1
-                }
+        return Array(UnsafeBufferPointer(start: outBuffer.floatChannelData![0], count: Int(outBuffer.frameLength)))
+    }
+
+    private func processWakeWordDetection(_ buffer: AVAudioPCMBuffer) {
+        if !self.accumulationBuffer.isEmpty { self.accumulationBuffer.removeAll() }
+        if let samples = getResampledSamples(buffer) {
+            if WakeWordManager.shared.isActive {
+                WakeWordManager.shared.processAudio(samples: samples)
             }
-        } else {
-            if !self.accumulationBuffer.isEmpty { self.accumulationBuffer.removeAll() }
         }
+    }
+
+    private func processRecordingData(_ samples: [Float]) {
+        self.accumulationBuffer.append(contentsOf: samples)
+        while self.accumulationBuffer.count >= opusFrameSize {
+            let frame = Array(self.accumulationBuffer[0..<opusFrameSize])
+            self.accumulationBuffer.removeFirst(opusFrameSize)
+            
+            // 发送端增益：使用 Accelerate vDSP 保持 8.0 倍增益和限幅
+            var boostedFrame = frame
+            var gain: Float = 8.0
+            var low: Float = -1.0
+            var high: Float = 1.0
+            vDSP_vsmul(boostedFrame, 1, &gain, &boostedFrame, 1, vDSP_Length(boostedFrame.count))
+            vDSP_vclip(boostedFrame, 1, &low, &high, &boostedFrame, 1, vDSP_Length(boostedFrame.count))
+            
+            if let encodedData = opusEncoder.encode(pcm: boostedFrame) {
+                WebSocketManager.shared.sendAudioData(encodedData)
+                self.txCount += 1
+            }
+        }
+    }
+
+    private func handleMicInput(_ buffer: AVAudioPCMBuffer) {
+        // 1. 如果正在 AI 说话，或者正在录音发送到服务器，彻底跳过唤醒检测及其前置计算
+        if self.isAISpeaking || self.isRecording {
+            // 如果正在录音且连接正常，只处理发送逻辑，不处理唤醒逻辑
+            if self.isRecording && WebSocketManager.shared.isConnected && !self.isAISpeaking {
+                if let resampledSamples = getResampledSamples(buffer) {
+                    processRecordingData(resampledSamples)
+                }
+            } else {
+                // 确保在无法录制时清理堆积的缓冲区
+                if !self.accumulationBuffer.isEmpty { self.accumulationBuffer.removeAll() }
+            }
+            return
+        }
+
+        // 2. 只有在空闲待机时，才执行重采样和唤醒词检测
+        processWakeWordDetection(buffer)
     }
     
     func setAISpeaking(_ speaking: Bool) {
@@ -235,13 +263,14 @@ class AudioEngineManager: ObservableObject {
             var error: NSError?
             if dec.convert(to: outBuffer, error: &error, withInputFrom: { _, outStatus in outStatus.pointee = .haveData; return inBuffer }) == .haveData {
                 
-                // --- 终极增强：5.0 倍数级放大 ---
+                // --- 终极增强：使用 Accelerate vDSP 5.0 倍数级放大 ---
                 if let channelData = outBuffer.floatChannelData?[0] {
                     let frameCount = Int(outBuffer.frameLength)
-                    for i in 0..<frameCount {
-                        let raw = channelData[i] * 5.0
-                        channelData[i] = max(-1.0, min(1.0, raw))
-                    }
+                    var gain: Float = 5.0
+                    var low: Float = -1.0
+                    var high: Float = 1.0
+                    vDSP_vsmul(channelData, 1, &gain, channelData, 1, vDSP_Length(frameCount))
+                    vDSP_vclip(channelData, 1, &low, &high, channelData, 1, vDSP_Length(frameCount))
                 }
                 
                 player.scheduleBuffer(outBuffer, at: nil, options: [], completionHandler: nil)
