@@ -66,10 +66,10 @@ class WakeWordManager: ObservableObject {
             featConfig: featConfig,
             modelConfig: modelConfig,
             keywordsFile: keywords,
-            maxActivePaths: 4,       // 回归标准搜寻路径
+            maxActivePaths: 6,       // 增加到 6，配合权重提升捕捉能力
             numTrailingBlanks: 1,
-            keywordsScore: 2.0,      // 回归理性的权重 (默认 1.0，2.0 属于轻微偏置)
-            keywordsThreshold: 0.1   // 回归官方平衡阈值 (0.1 - 0.2 是最稳区间)
+            keywordsScore: 4.0,      // 权重翻倍：从 2.0 提高到 4.0
+            keywordsThreshold: 0.05  // 门槛减半：从 0.1 降到 0.05，实现灵敏度翻倍
         )
 
         // 3. 创建识别器实例
