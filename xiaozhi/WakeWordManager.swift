@@ -66,10 +66,10 @@ class WakeWordManager: ObservableObject {
             featConfig: featConfig,
             modelConfig: modelConfig,
             keywordsFile: keywords,
-            maxActivePaths: 8,       // 继续增加到 8，提供更强的搜寻能力
+            maxActivePaths: 16,      // 深度搜索优化：从 8 增加到 16，允许保留更多不标准的读音路径
             numTrailingBlanks: 1,
-            keywordsScore: 8.0,      // 再次翻倍：从 4.0 提高到 8.0
-            keywordsThreshold: 0.025 // 再次减半：从 0.05 降到 0.025
+            keywordsScore: 20.0,     // 强力引导优化：从 8.0 提高到 20.0，强行修正不标准的发音
+            keywordsThreshold: 0.005 // 门槛极致优化：从 0.025 降到 0.005，几乎只要发音“沾边”就判定命中
         )
 
         // 3. 创建识别器实例
