@@ -145,8 +145,12 @@ class WebSocketManager: NSObject, ObservableObject, URLSessionWebSocketDelegate 
             switch result {
             case .success(let message):
                 switch message {
-                case .string(let text): self.handleJson(text)
-                case .data(let data): self.handleAudio(data)
+                case .string(let text): 
+                    print("<<< [RX JSON RAW] \(text)")
+                    self.handleJson(text)
+                case .data(let data): 
+                    // print("<<< [RX AUDIO RAW] \(data.count) bytes")
+                    self.handleAudio(data)
                 @unknown default: break
                 }
                 self.receiveMessage() // 继续接收
